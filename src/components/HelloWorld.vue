@@ -4,10 +4,32 @@ import { ref } from 'vue';
 defineProps<{ msg: string }>();
 
 const count = ref(0);
+const loading = ref(true);
+const fetchedMessage = ref<string>();
+
+function fetchMessage(): void {
+  loading.value = true;
+  const apiUrl = `${location.protocol}//${location.host}/api`;
+  fetch(`${apiUrl}/helloWorld`).then((response) =>
+    response.json().then((result) => {
+      fetchedMessage.value = result.message;
+      loading.value = false;
+    })
+  );
+}
+
+fetchMessage();
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+
+  <h2>
+    <span v-if="loading">Loading ...</span>
+    <span v-else>{{ fetchedMessage }}</span>
+  </h2>
+
+  <button @click="fetchMessage">Fetch message</button>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
