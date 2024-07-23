@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import HelloWorld from './HelloWorld.vue';
+import LoginButton from './buttons/LoginButton.vue';
+import SignupButton from './buttons/SignupButton.vue';
+import LogoutButton from './buttons/LogoutButton.vue';
 </script>
 
 <template>
@@ -20,6 +23,10 @@ import HelloWorld from './HelloWorld.vue';
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
+
+      <LoginButton />
+      <SignupButton />
+      <LogoutButton />
     </div>
   </header>
 </template>
