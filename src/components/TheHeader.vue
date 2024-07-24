@@ -4,6 +4,9 @@ import HelloWorld from './HelloWorld.vue';
 import LoginButton from './buttons/LoginButton.vue';
 import SignupButton from './buttons/SignupButton.vue';
 import LogoutButton from './buttons/LogoutButton.vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+
+const { isAuthenticated } = useAuth0();
 </script>
 
 <template>
@@ -24,9 +27,11 @@ import LogoutButton from './buttons/LogoutButton.vue';
         <RouterLink to="/about">About</RouterLink>
       </nav>
 
-      <LoginButton />
-      <SignupButton />
-      <LogoutButton />
+      <LogoutButton v-if="isAuthenticated" />
+      <template v-else>
+        <LoginButton />
+        <SignupButton />
+      </template>
     </div>
   </header>
 </template>
