@@ -1,4 +1,9 @@
+<script setup lang="ts">
+import TheHeader from '@/components/TheHeader.vue';
+</script>
+
 <template>
+  <TheHeader />
   <div class="about">
     <h1>This is an about page</h1>
   </div>

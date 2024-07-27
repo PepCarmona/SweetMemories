@@ -19,6 +19,25 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  /* New colors */
+  --primary-color-lighter: #dfdbf7;
+  --primary-color-light: #b5aee6;
+  --primary-color: #8b82cf;
+  --primary-color-dark: #665bb3;
+  --primary-color-darker: #4b3e9a;
+
+  --secondary-color-lighter: #fffdde;
+  --secondary-color-light: #fffbb7;
+  --secondary-color: #fffa92;
+  --secondary-color-dark: #fff86f;
+  --secondary-color-darker: #ded746;
+
+  --tertiary-color-lighter: #fff2de;
+  --tertiary-color-light: #ffe4b7;
+  --tertiary-color: #ffd592;
+  --tertiary-color-dark: #ffc86f;
+  --tertiary-color-darker: #dea446;
 }
 
 /* semantic color variables for this project */
