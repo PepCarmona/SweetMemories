@@ -1,60 +1,56 @@
-<script setup lang="ts"></script>
-
 <template>
   <section class="header-hero-section">
-    <nav class="navigation-bar"></nav>
-    <div class="hero-background">
-      <div class="figure-1"></div>
-      <div class="figure-2"></div>
-      <div class="figure-3"></div>
+    <nav>
+      Navbar
+      <a href="">Link 1</a>
+      <a href="">Link 2</a>
+    </nav>
+    <div class="content">
+      <h1>Guarda y comparte cada momento especial de tu bebé</h1>
+      <h2>
+        Un lugar seguro y privado para reunir y compartir los recuerdos más
+        preciados con tu familia y amigos cercanos.
+      </h2>
+      <button>Únete Ahora</button>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
+@mixin title {
+  font-family: var(--font-family-title);
+  color: var(--color-light);
+}
+
 .header-hero-section {
+  position: relative;
   overflow: hidden;
-  .hero-background {
-    position: relative;
-    height: 100%;
-    width: 100%;
-    .figure-1 {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(
-        135deg,
-        hsla(248, 53%, 79%, 1) 0%,
-        hsla(247, 45%, 66%, 1) 20%,
-        hsla(248, 37%, 53%, 1) 70%
-      );
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-lighter) 0%,
+    var(--color-primary-light) 5%,
+    var(--color-primary) 70%,
+    var(--color-primary-dark) 90%
+  );
+
+  .content {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    h1 {
+      @include title;
+      max-width: 1024px;
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 60px;
     }
-    .figure-2 {
-      position: absolute;
-      height: 80%;
-      width: 50%;
-      transform: rotate(15deg);
-      bottom: -20%;
-      left: -20%;
-      background: linear-gradient(
-        45deg,
-        hsla(57, 100%, 86%, 1) 20%,
-        hsla(57, 100%, 79%, 1) 40%,
-        hsla(57, 100%, 72%, 1) 80%
-      );
-    }
-    .figure-3 {
-      position: absolute;
-      height: 150%;
-      width: 30%;
-      transform: rotate(15deg);
-      right: -10%;
-      background: linear-gradient(
-        315deg,
-        hsla(38, 100%, 86%, 1) 20%,
-        hsla(37, 100%, 79%, 1) 40%,
-        hsla(37, 100%, 72%, 1) 80%
-      );
+
+    h2 {
+      @include title;
+      max-width: 800px;
+      font-size: 24px;
     }
   }
 }
