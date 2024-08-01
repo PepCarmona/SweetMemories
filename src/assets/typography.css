@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat&family=Open+Sans&family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+  /* Color palette */
+  --color-text-light: #f9f8fc;
+  --color-text-mid: #5f5c70;
+  --color-text-dark: #282442;
+
+  /* Font family */
+  --font-family-title: 'Poppins', sans-serif;
+  --font-family-body: 'Open Sans', sans-serif;
+  --font-family-action: 'Montserrat', sans-serif;
+  --font-family-decorative: 'Dancing Script', cursive;
+
+  /* Font sizes */
+  --font-base-size: 1em;
+  --font-scale-step: calc(var(--font-base-size) / 4);
+
+  --font-size-xs: calc(var(--font-base-size) - (var(--font-scale-step) * 2));
+  --font-size-sm: calc(var(--font-base-size) - var(--font-scale-step));
+  --font-size-md: var(--font-base-size);
+  --font-size-lg: calc(var(--font-base-size) + var(--font-scale-step));
+  --font-size-xl: calc(
+    calc(var(--font-base-size) + (var(--font-scale-step) * 2))
+  );
+  --font-size-xxl: calc(
+    calc(var(--font-base-size) + (var(--font-scale-step) * 4))
+  );
+  --font-size-xxxl: calc(
+    calc(var(--font-base-size) + (var(--font-scale-step) * 8))
+  );
+
+  /* Line height */
+  --line-height-title: 1.2;
+  --line-height-body: 1.4;
+}
