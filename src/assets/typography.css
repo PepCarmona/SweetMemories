@@ -14,7 +14,7 @@
 
   /* ----- Font sizes ----- */
   /* 16px */
-  --font-base-size: 1em;
+  --font-base-size: 1rem;
   /* 4px */
   --font-scale-step: calc(var(--font-base-size) / 4);
 

@@ -6,8 +6,8 @@
       <a href="">Link 2</a>
     </nav>
     <div class="content">
-      <h1>Guarda y comparte cada momento especial de tu bebé</h1>
-      <h2>
+      <h1 class="title">Comparte los momentos especiales de tu bebé</h1>
+      <h2 class="subtitle">
         Un lugar seguro y privado para reunir y compartir los recuerdos más
         preciados con tu familia y amigos cercanos.
       </h2>
@@ -30,25 +30,23 @@
 
   .content {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: var(--space-md);
 
-    h1 {
+    .title {
       font-family: var(--font-family-title);
       max-width: var(--breakpoint-l);
       font-size: var(--font-size-xxxl);
       line-height: var(--line-height-title);
-      font-weight: 600;
       color: var(--color-text-light);
+      margin-bottom: var(--space-md);
     }
 
-    h2 {
+    .subtitle {
       font-family: var(--font-family-title);
       max-width: var(--breakpoint-m);
-      font-size: var(--font-size-xl);
+      font-size: var(--font-size-lg);
       color: var(--color-text-light);
+      margin-bottom: var(--space-xl);
     }
   }
 }
