@@ -17,11 +17,6 @@
 </template>
 
 <style scoped lang="scss">
-@mixin title {
-  font-family: var(--font-family-title);
-  color: var(--color-light);
-}
-
 .header-hero-section {
   position: relative;
   overflow: hidden;
@@ -39,18 +34,21 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+
     h1 {
-      @include title;
-      max-width: 1024px;
-      font-size: 48px;
+      font-family: var(--font-family-title);
+      max-width: var(--breakpoint-l);
+      font-size: var(--font-size-xxxl);
+      line-height: var(--line-height-title);
       font-weight: 600;
-      line-height: 60px;
+      color: var(--color-text-light);
     }
 
     h2 {
-      @include title;
-      max-width: 800px;
-      font-size: 24px;
+      font-family: var(--font-family-title);
+      max-width: var(--breakpoint-m);
+      font-size: var(--font-size-xl);
+      color: var(--color-text-light);
     }
   }
 }
