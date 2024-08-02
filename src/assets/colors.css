@@ -1,20 +1,11 @@
 :root {
   /* Color palette */
-  --color-primary-lighter: #ded9f7;
-  --color-primary-light: #b5ade6;
-  --color-primary: #8b82cf;
-  --color-primary-dark: #665bb3;
-  --color-primary-darker: #4b3e9a;
+  --color-primary: hsl(280, 45%, 76%);
+  --color-secondary: #ffdcbc;
+  --color-tertiary: #a0d2d7;
+  --color-quaternary: #fdfebc;
 
-  --color-secondary-lighter: #fffdde;
-  --color-secondary-light: #fffbb7;
-  --color-secondary: #fffa92;
-  --color-secondary-dark: #fff86f;
-  --color-secondary-darker: #ded746;
-
-  --color-tertiary-lighter: #fff2de;
-  --color-tertiary-light: #ffe4b7;
-  --color-tertiary: #ffd592;
-  --color-tertiary-dark: #ffc86f;
-  --color-tertiary-darker: #dea446;
+  --color-light: hsl(280, 40%, 98%);
+  --color-mid: hsl(280, 10%, 40%);
+  --color-dark: hsl(280, 29%, 20%);
 }

@@ -1,11 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat&family=Open+Sans&family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat:wght@600&family=Open+Sans&family=Poppins:wght@300;400;600&display=swap');
 
 :root {
-  /* ----- Color palette ----- */
-  --color-text-light: #f9f8fc;
-  --color-text-mid: #5f5c70;
-  --color-text-dark: #282442;
-
   /* ----- Font family ----- */
   --font-family-title: 'Poppins', sans-serif;
   --font-family-body: 'Open Sans', sans-serif;
