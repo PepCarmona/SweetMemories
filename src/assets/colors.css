@@ -1,11 +1,11 @@
 :root {
   /* Color palette */
-  --color-primary: hsl(280, 45%, 76%);
+  --color-primary: #cba6dd;
   --color-secondary: #ffdcbc;
   --color-tertiary: #a0d2d7;
   --color-quaternary: #fdfebc;
 
-  --color-light: hsl(280, 40%, 98%);
-  --color-mid: hsl(280, 10%, 40%);
-  --color-dark: hsl(280, 29%, 20%);
+  --color-light: #fbf8fc;
+  --color-mid: #695c70;
+  --color-dark: #382442;
 }

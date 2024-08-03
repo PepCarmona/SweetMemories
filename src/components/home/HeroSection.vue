@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import AppButton from './ui/AppButton.vue';
+import AppButton from '../ui/AppButton.vue';
 </script>
 
 <template>
   <section class="header-hero-section">
-    <nav>
-      Navbar
-      <a href="">Link 1</a>
-      <a href="">Link 2</a>
-    </nav>
-
     <div class="content">
       <h1 class="title">Comparte los momentos especiales de tu bebé</h1>
 
@@ -18,7 +12,7 @@ import AppButton from './ui/AppButton.vue';
         preciados con tu familia y amigos cercanos.
       </h2>
 
-      <AppButton variant="primary">Únete ahora</AppButton>
+      <AppButton variant="primary" size="large">Únete ahora</AppButton>
     </div>
   </section>
 </template>

@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import HeaderHeroSection from '../components/HeaderHeroSection.vue';
+import NavBar from '@/components/home/NavBar.vue';
+import HeaderHeroSection from '../components/home/HeroSection.vue';
 </script>
 
 <template>
   <main>
+    <NavBar />
     <HeaderHeroSection class="header-hero-section" />
     <div class="body"></div>
   </main>
