@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import type { RouteLocationRaw } from 'vue-router';
 
 const variants = ['primary', 'primary-outlined', 'transparent'] as const;
 const sizes = ['small', 'medium', 'large'] as const;
 
 interface AppButtonProps {
-  to?: string;
+  to?: RouteLocationRaw;
   href?: string;
   variant?: (typeof variants)[number];
   size?: (typeof sizes)[number];

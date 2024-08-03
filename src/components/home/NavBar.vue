@@ -1,12 +1,25 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core';
 import AppButton from '../ui/AppButton.vue';
+import { computed } from 'vue';
+
+const { width } = useWindowSize();
+
+const isSmallWindow = computed<boolean>(() => width.value < 800);
 </script>
 
 <template>
   <nav class="nav-bar">
-    <AppButton class="logo-button" variant="transparent">Cudlo</AppButton>
+    <AppButton class="logo-button" variant="transparent" to="/">
+      Cudlo
+    </AppButton>
 
-    <AppButton variant="primary-outlined" size="small">Únete ahora</AppButton>
+    <AppButton
+      variant="primary-outlined"
+      :size="isSmallWindow ? 'small' : 'medium'"
+    >
+      Únete ahora
+    </AppButton>
   </nav>
 </template>
 
@@ -26,6 +39,17 @@ import AppButton from '../ui/AppButton.vue';
     color: transparent;
     background-position: 4% 32%;
     filter: saturate(130%) brightness(80%);
+
+    transition: all ease 200ms;
+
+    @include breakpoint(md) {
+      font-size: var(--font-size-xxxl);
+    }
+
+    @include on-hover {
+      background-position: center 32%;
+      filter: brightness(95%);
+    }
   }
 }
 </style>
