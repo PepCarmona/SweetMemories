@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import NavBar from '@/components/home/NavBar.vue';
-import HeaderHeroSection from '../components/home/HeroSection.vue';
+import HeroSection from '../components/home/HeroSection.vue';
+import KeyFeaturesSection from '@/components/home/KeyFeaturesSection.vue';
+import FeaturesDescriptionSection from '@/components/home/FeaturesDescriptionSection.vue';
 </script>
 
 <template>
   <main>
-    <NavBar />
-    <HeaderHeroSection class="header-hero-section" />
-    <div class="body"></div>
+    <HeroSection />
+    <KeyFeaturesSection />
+    <FeaturesDescriptionSection />
   </main>
 </template>
 
-<style scoped lang="scss">
-.header-hero-section {
-  height: 100vh;
-}
-
-.body {
-  height: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>
