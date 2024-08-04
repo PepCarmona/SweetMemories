@@ -54,5 +54,20 @@ import FamilyIllustration from '../ui/icons/FamilyIllustration.vue';
   .illustration {
     padding: 0 var(--space-md);
   }
+
+  @include breakpoint(md) {
+    height: calc(100vh - 80px);
+    display: flex;
+
+    .content {
+      position: absolute;
+    }
+
+    .illustration {
+      width: 70vw;
+      margin-left: auto;
+      align-self: flex-end;
+    }
+  }
 }
 </style>
