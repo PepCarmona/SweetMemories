@@ -7,3 +7,11 @@ import NavBar from './home/NavBar.vue';
     <NavBar />
   </header>
 </template>
+
+<style scoped lang="scss">
+.the-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-light);
+}
+</style>
