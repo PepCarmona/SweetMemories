@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import AppButton from '../ui/AppButton.vue';
+import FamilyIllustration from '../ui/icons/FamilyIllustration.vue';
 </script>
 
 <template>
@@ -14,6 +15,9 @@ import AppButton from '../ui/AppButton.vue';
 
       <AppButton variant="primary" size="large">Únete ahora</AppButton>
     </div>
+    <div class="illustration">
+      <FamilyIllustration />
+    </div>
   </section>
 </template>
 
@@ -22,10 +26,11 @@ import AppButton from '../ui/AppButton.vue';
   .content {
     padding: var(--space-md);
     text-align: center;
+    margin-bottom: var(--space-xxxl);
 
     .title {
       max-width: var(--breakpoint-m);
-      margin: 0 auto var(--space-lg) auto;
+      margin: 0 auto var(--space-xs) auto;
 
       font-family: var(--font-family-title);
       font-size: var(--font-size-xxxl);
@@ -37,13 +42,17 @@ import AppButton from '../ui/AppButton.vue';
 
     .subtitle {
       max-width: var(--breakpoint-s);
-      margin: 0 auto var(--space-lg) auto;
+      margin: 0 auto var(--space-xl) auto;
 
       font-family: var(--font-family-title);
       font-size: var(--font-size-lg);
 
       color: var(--color-dark);
     }
+  }
+
+  .illustration {
+    padding: 0 var(--space-md);
   }
 }
 </style>

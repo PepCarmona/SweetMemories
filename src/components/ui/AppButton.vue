@@ -38,6 +38,7 @@ const buttonClass = computed<string>(
   border: none;
   display: inline-block;
   cursor: pointer;
+  height: fit-content;
 
   // Variants
   &.primary {
