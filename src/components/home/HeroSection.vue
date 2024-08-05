@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AppButton from '../ui/AppButton.vue';
-import FamilyIllustration from '../ui/icons/FamilyIllustration.vue';
+import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
 </script>
 
 <template>

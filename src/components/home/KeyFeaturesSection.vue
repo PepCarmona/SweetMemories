@@ -2,9 +2,9 @@
 import PrivacyIcon from '../ui/icons/PrivacyIcon.vue';
 import ShareIcon from '../ui/icons/ShareIcon.vue';
 import LockIcon from '../ui/icons/LockIcon.vue';
-import BlobOne from '../ui/icons/BlobOne.vue';
-import BlobTwo from '../ui/icons/BlobTwo.vue';
-import BlobThree from '../ui/icons/BlobThree.vue';
+import BlobOne from '../ui/blobs/BlobOne.vue';
+import BlobTwo from '../ui/blobs/BlobTwo.vue';
+import BlobThree from '../ui/blobs/BlobThree.vue';
 </script>
 
 <template>

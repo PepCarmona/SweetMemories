@@ -5,7 +5,7 @@ import FeaturesDescriptionSection from '@/components/home/FeaturesDescriptionSec
 </script>
 
 <template>
-  <main>
+  <main class="home-page">
     <HeroSection />
     <KeyFeaturesSection />
     <FeaturesDescriptionSection />
