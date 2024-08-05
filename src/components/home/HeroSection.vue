@@ -13,7 +13,9 @@ import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
         preciados con tu familia y amigos cercanos.
       </h2>
 
-      <AppButton variant="primary" size="large">Únete ahora</AppButton>
+      <AppButton variant="primary" size="large" to="/auth">
+        Únete ahora
+      </AppButton>
     </div>
     <div class="illustration">
       <FamilyIllustration />

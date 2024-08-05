@@ -16,6 +16,7 @@ const isSmallWindow = computed<boolean>(() => width.value < 800);
     <AppButton
       variant="primary-outlined"
       :size="isSmallWindow ? 'small' : 'medium'"
+      to="/auth"
     >
       Únete ahora
     </AppButton>

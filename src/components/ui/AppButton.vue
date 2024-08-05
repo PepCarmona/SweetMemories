@@ -2,14 +2,11 @@
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
 
-const variants = ['primary', 'primary-outlined', 'transparent'] as const;
-const sizes = ['small', 'medium', 'large'] as const;
-
 interface AppButtonProps {
   to?: RouteLocationRaw;
   href?: string;
-  variant?: (typeof variants)[number];
-  size?: (typeof sizes)[number];
+  variant?: 'primary' | 'primary-outlined' | 'transparent';
+  size?: 'small' | 'medium' | 'large';
 }
 const props = defineProps<AppButtonProps>();
 
@@ -41,6 +38,7 @@ const buttonClass = computed<string>(
   height: fit-content;
   font-family: inherit;
   color: inherit;
+  text-decoration: none;
 
   // Variants
   &.primary {

@@ -1,9 +1,18 @@
 <script setup lang="ts">
 import AppButton from '../ui/AppButton.vue';
+
+interface LogoButtonProps {
+  fixedSize?: boolean;
+}
+const props = defineProps<LogoButtonProps>();
 </script>
 
 <template>
-  <AppButton class="logo-button" variant="transparent" to="/">
+  <AppButton
+    :class="{ 'logo-button': true, 'fixed-size': props.fixedSize }"
+    variant="transparent"
+    to="/"
+  >
     Cudlo
   </AppButton>
 </template>
@@ -21,6 +30,10 @@ import AppButton from '../ui/AppButton.vue';
   filter: brightness(90%);
 
   transition: all ease 200ms;
+
+  &.fixed-size {
+    font-size: var(--font-size-xxxl);
+  }
 
   @include breakpoint(md) {
     font-size: var(--font-size-xxxl);
