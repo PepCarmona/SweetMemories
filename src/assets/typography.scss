@@ -38,4 +38,9 @@
   /* ----- Line height ----- */
   --line-height-title: 1.2;
   --line-height-body: 1.4;
+
+  @include breakpoint(xxl) {
+    /* 24px */
+    --font-base-size: 1.5rem;
+  }
 }

@@ -110,6 +110,7 @@ import BlobThree from '../ui/icons/BlobThree.vue';
   @include breakpoint(md) {
     flex-direction: row;
     align-items: flex-start;
+    padding: var(--space-md) var(--space-xxxl);
 
     .key-feature {
       width: unset;

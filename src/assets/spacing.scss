@@ -28,4 +28,9 @@
   --breakpoint-m: 800px;
   --breakpoint-l: 1024px;
   --breakpoint-xl: 1280px;
+
+  @include breakpoint(xxl) {
+    /* 24px */
+    --space-unit: 1.5rem;
+  }
 }
