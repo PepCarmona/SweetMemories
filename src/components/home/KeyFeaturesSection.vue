@@ -62,9 +62,11 @@ import BlobThree from '../ui/icons/BlobThree.vue';
 
     .icon-wrapper {
       position: relative;
-      width: fit-content;
+      width: 80px;
+      height: 80px;
 
-      .icon {
+      .icon,
+      .blob {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -102,6 +104,15 @@ import BlobThree from '../ui/icons/BlobThree.vue';
     .description {
       margin-top: var(--space-lg);
       text-align: center;
+    }
+  }
+
+  @include breakpoint(md) {
+    flex-direction: row;
+    align-items: flex-start;
+
+    .key-feature {
+      width: unset;
     }
   }
 }
