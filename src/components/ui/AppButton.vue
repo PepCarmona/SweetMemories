@@ -39,6 +39,8 @@ const buttonClass = computed<string>(
   display: inline-block;
   cursor: pointer;
   height: fit-content;
+  font-family: inherit;
+  color: inherit;
 
   // Variants
   &.primary {
