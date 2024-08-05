@@ -1,9 +1,14 @@
 :root {
   /* Color palette */
+  --color-primary-light: #e8d3f2;
   --color-primary: #cba6dd;
-  --color-secondary: #ffdcbc;
-  --color-tertiary: #a0d2d7;
-  --color-quaternary: #fdfebc;
+  --color-primary-dark: #854d9f;
+  --color-secondary-light: #ffdedc;
+  --color-secondary: #ffbfbc;
+  --color-secondary-dark: #ef736d;
+  --color-tertiary-light: #d5ddf2;
+  --color-tertiary: #aab8de;
+  --color-tertiary-dark: #5368a1;
 
   --color-light: #fbf8fc;
   --color-mid: #695c70;

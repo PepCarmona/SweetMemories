@@ -16,10 +16,10 @@
   --space-lg: calc(1.25 * var(--space-unit));
   /* 32px */
   --space-xl: calc(2 * var(--space-unit));
-  /* 40px */
-  --space-xxl: calc(2.5 * var(--space-unit));
   /* 48px */
-  --space-xxxl: calc(3 * var(--space-unit));
+  --space-xxl: calc(3 * var(--space-unit));
+  /* 80px */
+  --space-xxxl: calc(5 * var(--space-unit));
 
   /* ----- Breakpoints ----- */
   --breakpoint-xxs: 320px;

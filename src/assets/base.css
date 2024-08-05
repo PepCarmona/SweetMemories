@@ -17,7 +17,7 @@ body {
   min-height: 100vh;
   color: var(--color-dark);
   background: var(--color-light);
-  font-family: var(--body-font-family);
+  font-family: var(--font-family-body);
   font-size: var(--font-base-size);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

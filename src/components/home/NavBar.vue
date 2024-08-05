@@ -38,7 +38,7 @@ const isSmallWindow = computed<boolean>(() => width.value < 800);
     background-clip: text;
     color: transparent;
     background-position: 4% 32%;
-    filter: saturate(130%) brightness(80%);
+    filter: brightness(90%);
 
     transition: all ease 200ms;
 
