@@ -2,35 +2,25 @@
 import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
 import AppInputPassword from '../ui/AppInputPassword.vue';
-import AppInputText from '../ui/AppInputText.vue';
 import FacebookIcon from '../ui/icons/FacebookIcon.vue';
 import GoogleIcon from '../ui/icons/GoogleIcon.vue';
 
-interface SignupFormEmits {
+interface LoginFormEmits {
   (eventName: 'switch-auth-mode'): void;
 }
-const emit = defineEmits<SignupFormEmits>();
+const emit = defineEmits<LoginFormEmits>();
 </script>
 
 <template>
   <form class="signup-form">
-    <h1 class="title">Crea tu cuenta</h1>
+    <h1 class="title">Bienvenido de nuevo</h1>
 
     <h2 class="subtitle">
-      Empieza a compartir fotos y vídeos de tu bebé con familiares y amigos de
-      forma segura.
+      Accede a tu cuenta y sigue compartiendo y disfrutando de tus recuerdos
+      familiares.
     </h2>
 
     <div class="inputs">
-      <div class="input name">
-        <label class="label" for="name">Nombre</label>
-        <AppInputText
-          placeholder="Introduce tu nombre"
-          name="Nombre"
-          required
-        />
-      </div>
-
       <div class="input mail">
         <label class="label" for="mail">Correo electrónico</label>
         <AppInputMail
@@ -48,34 +38,25 @@ const emit = defineEmits<SignupFormEmits>();
           required
         />
       </div>
-
-      <div class="input confirm-password">
-        <label class="label" for="confirm-password">Confirmar contraseña</label>
-        <AppInputPassword
-          placeholder="Introduce de nuevo tu contraseña"
-          name="confirm-password"
-          required
-        />
-      </div>
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="large"> Crear cuenta </AppButton>
+      <AppButton variant="primary" size="large">Inicia sesión</AppButton>
       <AppButton class="oauth-button" variant="dark-outlined" size="large">
         <GoogleIcon class="oauth-icon" />
-        <span class="oauth-text">Crear cuenta con Google</span>
+        <span class="oauth-text">Inicia sesión con Google</span>
       </AppButton>
       <AppButton class="oauth-button" variant="dark-outlined" size="large">
         <FacebookIcon class="oauth-icon" />
-        <span class="oauth-text">Crear cuenta con Facebook</span>
+        <span class="oauth-text">Inicia sesión con Facebook</span>
       </AppButton>
     </div>
 
     <div class="switch-auth-mode">
-      <span>¿Ya tienes una cuenta?</span>
+      <span>¿Aún no tienes una cuenta?</span>
       &nbsp;
       <AppButton variant="link" @click="emit('switch-auth-mode')">
-        Inicia sesión
+        Regístrate
       </AppButton>
     </div>
   </form>

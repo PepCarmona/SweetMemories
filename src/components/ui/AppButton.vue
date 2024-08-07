@@ -5,7 +5,12 @@ import type { RouteLocationRaw } from 'vue-router';
 interface AppButtonProps {
   to?: RouteLocationRaw;
   href?: string;
-  variant?: 'primary' | 'primary-outlined' | 'dark-outlined' | 'transparent';
+  variant?:
+    | 'primary'
+    | 'primary-outlined'
+    | 'dark-outlined'
+    | 'transparent'
+    | 'link';
   size?: 'small' | 'medium' | 'large';
 }
 const props = defineProps<AppButtonProps>();
@@ -95,6 +100,15 @@ const buttonClass = computed<string>(
   &.transparent {
     padding: 0;
     background-color: transparent;
+  }
+
+  &.link {
+    padding: 0;
+    background-color: transparent;
+    font-family: var(--font-family-action);
+    font-weight: 600;
+
+    color: var(--color-primary);
   }
 
   // Sizes

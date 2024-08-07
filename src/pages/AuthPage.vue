@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import AuthBackground from '@/components/auth/AuthBackground.vue';
+import LoginForm from '@/components/auth/LoginForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
 import LogoButton from '@/components/ui/LogoButton.vue';
+import { useAuthStore } from '@/stores/authStore';
+
+const authStore = useAuthStore();
 </script>
 
 <template>
@@ -9,7 +13,11 @@ import LogoButton from '@/components/ui/LogoButton.vue';
     <AuthBackground class="background" />
     <div class="form-container">
       <LogoButton fixed-size />
-      <SignupForm />
+      <SignupForm
+        v-if="authStore.authMode === 'signup'"
+        @switch-auth-mode="authStore.authMode = 'login'"
+      />
+      <LoginForm v-else @switch-auth-mode="authStore.authMode = 'signup'" />
     </div>
   </main>
 </template>
