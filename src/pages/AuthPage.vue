@@ -31,6 +31,7 @@ import LogoButton from '@/components/ui/LogoButton.vue';
     flex-direction: column;
     align-items: center;
     gap: var(--space-lg);
+    margin: auto;
   }
 }
 </style>

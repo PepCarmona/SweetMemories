@@ -29,7 +29,7 @@ const props = defineProps<LogoButtonProps>();
   background-position: 4% 32%;
   filter: brightness(90%);
 
-  transition: all ease 200ms;
+  transition: background ease 200ms;
 
   &.fixed-size {
     font-size: var(--font-size-xxxl);
@@ -41,7 +41,6 @@ const props = defineProps<LogoButtonProps>();
 
   @include on-hover {
     background-position: center 32%;
-    filter: brightness(95%);
   }
 }
 </style>

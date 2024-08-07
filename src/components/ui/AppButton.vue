@@ -5,7 +5,7 @@ import type { RouteLocationRaw } from 'vue-router';
 interface AppButtonProps {
   to?: RouteLocationRaw;
   href?: string;
-  variant?: 'primary' | 'primary-outlined' | 'transparent';
+  variant?: 'primary' | 'primary-outlined' | 'dark-outlined' | 'transparent';
   size?: 'small' | 'medium' | 'large';
 }
 const props = defineProps<AppButtonProps>();
@@ -31,6 +31,7 @@ const buttonClass = computed<string>(
 
 <style scoped lang="scss">
 .app-button {
+  position: relative;
   border-radius: 9999px;
   border: none;
   display: inline-block;
@@ -39,6 +40,11 @@ const buttonClass = computed<string>(
   font-family: inherit;
   color: inherit;
   text-decoration: none;
+  transition: outline 0s;
+
+  &:focus {
+    outline: 3px solid var(--color-tertiary);
+  }
 
   // Variants
   &.primary {
@@ -50,33 +56,39 @@ const buttonClass = computed<string>(
 
     transition: background ease 200ms;
 
-    &:focus {
-      outline: 3px solid var(--color-tertiary);
-    }
-
     @include on-hover {
       background-color: var(--color-tertiary);
     }
   }
 
   &.primary-outlined {
-    border: 2px solid var(--color-primary);
+    box-shadow: inset 0 0 0 2px var(--color-primary);
     background-color: var(--color-light);
     font-family: var(--font-family-action);
     font-weight: 600;
 
     color: var(--color-primary);
 
-    transition: border ease 200ms;
-    transition: color ease 200ms;
-
-    &:focus {
-      outline: 3px solid var(--color-tertiary);
-    }
+    transition: all ease 200ms;
 
     @include on-hover {
-      border: 2px solid var(--color-tertiary);
+      box-shadow: inset 0 0 0 2px var(--color-tertiary);
       color: var(--color-tertiary);
+    }
+  }
+
+  &.dark-outlined {
+    box-shadow: inset 0 0 0 1px var(--color-dark);
+    background-color: var(--color-light);
+    font-family: var(--font-family-action);
+    font-weight: 600;
+
+    color: var(--color-dark);
+
+    transition: background ease 200ms;
+
+    @include on-hover {
+      background-color: var(--color-mid-light);
     }
   }
 
