@@ -3,11 +3,6 @@ import { AuthStep } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
 import AppInputPassword from '../ui/AppInputPassword.vue';
-
-interface LoginFormEmits {
-  (eventName: 'switch-auth-mode', eventValue: AuthStep): void;
-}
-const emit = defineEmits<LoginFormEmits>();
 </script>
 
 <template>
@@ -39,7 +34,10 @@ const emit = defineEmits<LoginFormEmits>();
         <AppButton
           class="forgot-password"
           variant="link"
-          @click="emit('switch-auth-mode', AuthStep.PasswordRecovery)"
+          :to="{
+            name: '/auth/[step]',
+            params: { step: AuthStep.PasswordRecovery },
+          }"
         >
           ¿Olvidaste la contraseña?
         </AppButton>
@@ -55,7 +53,7 @@ const emit = defineEmits<LoginFormEmits>();
       &nbsp;
       <AppButton
         variant="link"
-        @click="emit('switch-auth-mode', AuthStep.Signup)"
+        :to="{ name: '/auth/[step]', params: { step: AuthStep.Signup } }"
       >
         Regístrate
       </AppButton>

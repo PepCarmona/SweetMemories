@@ -1,13 +1,20 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import AuthBackground from '@/components/auth/AuthBackground.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import PasswordRecoveryForm from '@/components/auth/PasswordRecoveryForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
 import LogoButton from '@/components/ui/LogoButton.vue';
-import { useAuthStore } from '@/stores/authStore';
 import { AuthStep } from '@/types/auth';
 
-const authStore = useAuthStore();
+definePage({
+  props: true,
+});
+
+interface AuthPageProps {
+  step: AuthStep;
+}
+const props = defineProps<AuthPageProps>();
 </script>
 
 <template>
@@ -15,16 +22,10 @@ const authStore = useAuthStore();
     <AuthBackground class="background" />
     <div class="form-container">
       <LogoButton fixed-size />
-      <SignupForm
-        v-if="authStore.authMode === AuthStep.Signup"
-        @switch-auth-mode="authStore.authMode = $event"
-      />
-      <LoginForm
-        v-else-if="authStore.authMode === AuthStep.Login"
-        @switch-auth-mode="authStore.authMode = $event"
-      />
+      <SignupForm v-if="props.step === AuthStep.Signup" />
+      <LoginForm v-else-if="props.step === AuthStep.Login" />
       <PasswordRecoveryForm
-        v-else-if="authStore.authMode === AuthStep.PasswordRecovery"
+        v-else-if="props.step === AuthStep.PasswordRecovery"
       />
     </div>
   </main>

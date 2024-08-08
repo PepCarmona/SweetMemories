@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import HeroSection from '../components/home/HeroSection.vue';
 import KeyFeaturesSection from '@/components/home/KeyFeaturesSection.vue';

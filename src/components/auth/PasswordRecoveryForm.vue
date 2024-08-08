@@ -2,11 +2,6 @@
 import { AuthStep } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
-
-interface PasswordRecoveryFormEmits {
-  (eventName: 'switch-auth-mode', eventValue: AuthStep): void;
-}
-const emit = defineEmits<PasswordRecoveryFormEmits>();
 </script>
 
 <template>
@@ -30,7 +25,7 @@ const emit = defineEmits<PasswordRecoveryFormEmits>();
       </AppButton>
       <AppButton
         variant="link"
-        @click="emit('switch-auth-mode', AuthStep.Login)"
+        :to="{ name: '/auth/[step]', params: { step: AuthStep.Login } }"
       >
         Go back
       </AppButton>

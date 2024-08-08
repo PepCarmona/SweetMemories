@@ -4,11 +4,6 @@ import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
 import AppInputPassword from '../ui/AppInputPassword.vue';
 import AppInputText from '../ui/AppInputText.vue';
-
-interface SignupFormEmits {
-  (eventName: 'switch-auth-mode', eventValue: AuthStep): void;
-}
-const emit = defineEmits<SignupFormEmits>();
 </script>
 
 <template>
@@ -67,7 +62,7 @@ const emit = defineEmits<SignupFormEmits>();
       &nbsp;
       <AppButton
         variant="link"
-        @click="emit('switch-auth-mode', AuthStep.Login)"
+        :to="{ name: '/auth/[step]', params: { step: AuthStep.Login } }"
       >
         Inicia sesión
       </AppButton>

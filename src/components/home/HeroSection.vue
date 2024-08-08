@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { AuthStep } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
 </script>
@@ -13,7 +14,11 @@ import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
         preciados con tu familia y amigos cercanos.
       </h2>
 
-      <AppButton variant="primary" size="large" to="/auth">
+      <AppButton
+        variant="primary"
+        size="large"
+        :to="{ name: '/auth/[step]', params: { step: AuthStep.Signup } }"
+      >
         Únete ahora
       </AppButton>
     </div>
