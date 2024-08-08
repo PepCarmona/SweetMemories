@@ -5,12 +5,7 @@ import type { RouteLocationRaw } from 'vue-router';
 interface AppButtonProps {
   to?: RouteLocationRaw;
   href?: string;
-  variant?:
-    | 'primary'
-    | 'primary-outlined'
-    | 'dark-outlined'
-    | 'transparent'
-    | 'link';
+  variant?: 'primary' | 'primary-outlined' | 'transparent' | 'link';
   size?: 'small' | 'medium' | 'large';
 }
 const props = defineProps<AppButtonProps>();
@@ -79,21 +74,6 @@ const buttonClass = computed<string>(
     @include on-hover {
       box-shadow: inset 0 0 0 2px var(--color-tertiary);
       color: var(--color-tertiary);
-    }
-  }
-
-  &.dark-outlined {
-    box-shadow: inset 0 0 0 1px var(--color-dark);
-    background-color: var(--color-light);
-    font-family: var(--font-family-action);
-    font-weight: 600;
-
-    color: var(--color-dark);
-
-    transition: background ease 200ms;
-
-    @include on-hover {
-      background-color: var(--color-mid-light);
     }
   }
 

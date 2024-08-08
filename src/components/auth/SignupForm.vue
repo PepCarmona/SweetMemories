@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import { AuthStep } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
 import AppInputPassword from '../ui/AppInputPassword.vue';
 import AppInputText from '../ui/AppInputText.vue';
-import FacebookIcon from '../ui/icons/FacebookIcon.vue';
-import GoogleIcon from '../ui/icons/GoogleIcon.vue';
 
 interface SignupFormEmits {
-  (eventName: 'switch-auth-mode'): void;
+  (eventName: 'switch-auth-mode', eventValue: AuthStep): void;
 }
 const emit = defineEmits<SignupFormEmits>();
 </script>
@@ -22,7 +21,7 @@ const emit = defineEmits<SignupFormEmits>();
     </h2>
 
     <div class="inputs">
-      <div class="input name">
+      <div class="input">
         <label class="label" for="name">Nombre</label>
         <AppInputText
           placeholder="Introduce tu nombre"
@@ -31,7 +30,7 @@ const emit = defineEmits<SignupFormEmits>();
         />
       </div>
 
-      <div class="input mail">
+      <div class="input">
         <label class="label" for="mail">Correo electrónico</label>
         <AppInputMail
           placeholder="Introduce tu correo electrónico"
@@ -40,7 +39,7 @@ const emit = defineEmits<SignupFormEmits>();
         />
       </div>
 
-      <div class="input password">
+      <div class="input">
         <label class="label" for="password">Contraseña</label>
         <AppInputPassword
           placeholder="Introduce tu contraseña"
@@ -49,7 +48,7 @@ const emit = defineEmits<SignupFormEmits>();
         />
       </div>
 
-      <div class="input confirm-password">
+      <div class="input">
         <label class="label" for="confirm-password">Confirmar contraseña</label>
         <AppInputPassword
           placeholder="Introduce de nuevo tu contraseña"
@@ -61,20 +60,15 @@ const emit = defineEmits<SignupFormEmits>();
 
     <div class="buttons">
       <AppButton variant="primary" size="large"> Crear cuenta </AppButton>
-      <AppButton class="oauth-button" variant="dark-outlined" size="large">
-        <GoogleIcon class="oauth-icon" />
-        <span class="oauth-text">Crear cuenta con Google</span>
-      </AppButton>
-      <AppButton class="oauth-button" variant="dark-outlined" size="large">
-        <FacebookIcon class="oauth-icon" />
-        <span class="oauth-text">Crear cuenta con Facebook</span>
-      </AppButton>
     </div>
 
     <div class="switch-auth-mode">
       <span>¿Ya tienes una cuenta?</span>
       &nbsp;
-      <AppButton variant="link" @click="emit('switch-auth-mode')">
+      <AppButton
+        variant="link"
+        @click="emit('switch-auth-mode', AuthStep.Login)"
+      >
         Inicia sesión
       </AppButton>
     </div>
@@ -122,20 +116,6 @@ const emit = defineEmits<SignupFormEmits>();
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-
-    .oauth-button {
-      display: flex;
-      align-items: center;
-      padding-left: var(--space-md);
-      font-size: var(--font-size-md);
-
-      .oauth-icon {
-        height: var(--space-lg);
-      }
-      .oauth-text {
-        flex-grow: 1;
-      }
-    }
   }
 
   .switch-auth-mode {
