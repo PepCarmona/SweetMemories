@@ -45,7 +45,7 @@ import AppInputPassword from '../ui/AppInputPassword.vue';
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="large">Inicia sesión</AppButton>
+      <AppButton variant="primary" size="medium">Inicia sesión</AppButton>
     </div>
 
     <div class="switch-auth-mode">
@@ -64,7 +64,7 @@ import AppInputPassword from '../ui/AppInputPassword.vue';
 <style scoped lang="scss">
 .signup-form {
   text-align: center;
-  max-width: var(--breakpoint-xs);
+  width: 100%;
 
   .title {
     font-family: var(--font-family-title);

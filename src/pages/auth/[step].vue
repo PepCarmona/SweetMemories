@@ -47,6 +47,24 @@ const props = defineProps<AuthPageProps>();
     align-items: center;
     gap: var(--space-lg);
     margin: auto;
+    max-width: var(--breakpoint-xs);
+  }
+
+  @include breakpoint(md) {
+    display: flex;
+
+    .background {
+      display: block;
+      overflow: hidden;
+    }
+
+    .form-container {
+      background-color: var(--color-light);
+      border-radius: var(--space-md);
+      box-shadow: 0 0 32px var(--color-mid-light);
+      padding: var(--space-md);
+      width: var(--breakpoint-xs);
+    }
   }
 }
 </style>

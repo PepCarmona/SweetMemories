@@ -54,7 +54,7 @@ import AppInputText from '../ui/AppInputText.vue';
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="large"> Crear cuenta </AppButton>
+      <AppButton variant="primary" size="medium"> Crear cuenta </AppButton>
     </div>
 
     <div class="switch-auth-mode">
@@ -73,7 +73,7 @@ import AppInputText from '../ui/AppInputText.vue';
 <style scoped lang="scss">
 .signup-form {
   text-align: center;
-  max-width: var(--breakpoint-xs);
+  width: 100%;
 
   .title {
     font-family: var(--font-family-title);

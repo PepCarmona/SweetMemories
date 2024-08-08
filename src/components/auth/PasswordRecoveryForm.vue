@@ -20,7 +20,7 @@ import AppInputMail from '../ui/AppInputMail.vue';
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="large">
+      <AppButton variant="primary" size="medium">
         Enviar link de recuperación
       </AppButton>
       <AppButton
@@ -36,7 +36,7 @@ import AppInputMail from '../ui/AppInputMail.vue';
 <style scoped lang="scss">
 .password-recovery-form {
   text-align: center;
-  max-width: var(--breakpoint-xs);
+  width: 100%;
 
   .title {
     font-family: var(--font-family-title);
