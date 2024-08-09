@@ -1,9 +1,18 @@
 <script setup lang="ts">
+interface AppInputMailProps {
+  invalid?: boolean;
+}
+const props = defineProps<AppInputMailProps>();
+
 const model = defineModel();
 </script>
 
 <template>
-  <input class="app-input-mail" type="email" v-model="model" />
+  <input
+    :class="{ 'app-input-mail': true, invalid: props.invalid }"
+    type="email"
+    v-model="model"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -25,6 +34,10 @@ const model = defineModel();
 
   &::placeholder {
     color: var(--color-mid);
+  }
+
+  &.invalid {
+    border-color: var(--color-error);
   }
 }
 </style>

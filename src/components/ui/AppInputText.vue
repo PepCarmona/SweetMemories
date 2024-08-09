@@ -1,9 +1,18 @@
 <script setup lang="ts">
+interface AppInputTextProps {
+  invalid?: boolean;
+}
+const props = defineProps<AppInputTextProps>();
+
 const model = defineModel();
 </script>
 
 <template>
-  <input class="app-input-text" type="text" v-model="model" />
+  <input
+    :class="{ 'app-input-text': true, invalid: props.invalid }"
+    type="text"
+    v-model="model"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -25,6 +34,10 @@ const model = defineModel();
 
   &::placeholder {
     color: var(--color-mid);
+  }
+
+  &.invalid {
+    border-color: var(--color-error);
   }
 }
 </style>

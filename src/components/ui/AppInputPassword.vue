@@ -1,5 +1,6 @@
 <script setup lang="ts">
 interface AppInputPasswordProps {
+  invalid?: boolean;
   shouldShowPassword?: boolean;
 }
 const props = defineProps<AppInputPasswordProps>();
@@ -9,7 +10,7 @@ const model = defineModel();
 
 <template>
   <input
-    class="app-input-password"
+    :class="{ 'app-input-password': true, invalid: props.invalid }"
     :type="props.shouldShowPassword ? 'text' : 'password'"
     v-model="model"
   />
@@ -34,6 +35,10 @@ const model = defineModel();
 
   &::placeholder {
     color: var(--color-mid);
+  }
+
+  &.invalid {
+    border-color: var(--color-error);
   }
 }
 </style>

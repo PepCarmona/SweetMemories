@@ -6,12 +6,37 @@ import AppInputPassword from '../ui/AppInputPassword.vue';
 import AppInputText from '../ui/AppInputText.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
 import { ref } from 'vue';
+import { useForm } from 'vee-validate';
+import { z } from 'zod';
+import type { TypeToZod } from '@/types/utils';
+import { toTypedSchema } from '@vee-validate/zod';
+
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema: toTypedSchema(
+    z.object<TypeToZod<SignupUser>>({
+      email: z.string({ required_error: 'Email is required' }).email(),
+      name: z.string({ required_error: 'Name is required' }),
+      password: z
+        .string({ required_error: 'Password is required' })
+        .min(6, 'Password must contain at least 6 characters'),
+    })
+  ),
+});
+
+const [email, emailProps] = defineField('email');
+const [name, nameProps] = defineField('name');
+const [password, passwordProps] = defineField('password');
 
 const shouldShowPassword = ref(false);
+
+const onSubmit = handleSubmit((values) => {
+  alert(values);
+});
 </script>
 
 <template>
-  <form class="signup-form">
+  {{ errors }}
+  <form class="signup-form" @submit="onSubmit" novalidate>
     <h1 class="title">Crea tu cuenta</h1>
 
     <h2 class="subtitle">
@@ -24,9 +49,12 @@ const shouldShowPassword = ref(false);
         <label class="label" for="name">Nombre</label>
         <AppInputText
           placeholder="Introduce tu nombre"
-          name="Nombre"
-          required
+          name="name"
+          v-model="name"
+          v-bind="nameProps"
+          :invalid="!!errors.name"
         />
+        <span v-if="errors.name" class="error">{{ errors.name }}</span>
       </div>
 
       <div class="input">
@@ -34,8 +62,11 @@ const shouldShowPassword = ref(false);
         <AppInputMail
           placeholder="Introduce tu correo electrónico"
           name="mail"
-          required
+          v-model="email"
+          v-bind="emailProps"
+          :invalid="!!errors.email"
         />
+        <span v-if="errors.email" class="error">{{ errors.email }}</span>
       </div>
 
       <div class="input">
@@ -43,11 +74,14 @@ const shouldShowPassword = ref(false);
         <AppInputPassword
           placeholder="Introduce tu contraseña"
           name="password"
-          required
+          v-model="password"
+          v-bind="passwordProps"
           :should-show-password="shouldShowPassword"
+          :invalid="!!errors.password"
         />
+        <span v-if="errors.password" class="error">{{ errors.password }}</span>
 
-        <AppCheckbox v-model="shouldShowPassword">
+        <AppCheckbox class="show-password" v-model="shouldShowPassword">
           Mostrar contraseña
         </AppCheckbox>
       </div>
@@ -97,11 +131,21 @@ const shouldShowPassword = ref(false);
       display: flex;
       flex-direction: column;
       align-items: start;
-      gap: var(--space-xs);
 
       .label {
         font-weight: 600;
         margin-left: var(--space-xs);
+        margin-bottom: var(--space-xs);
+      }
+
+      .error {
+        font-size: var(--font-size-sm);
+        color: var(--color-error);
+        margin-left: var(--space-xs);
+      }
+
+      .show-password {
+        margin-top: var(--space-xs);
       }
     }
   }
