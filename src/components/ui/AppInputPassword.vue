@@ -1,9 +1,18 @@
 <script setup lang="ts">
+interface AppInputPasswordProps {
+  shouldShowPassword?: boolean;
+}
+const props = defineProps<AppInputPasswordProps>();
+
 const model = defineModel();
 </script>
 
 <template>
-  <input class="app-input-password" type="password" v-model="model" />
+  <input
+    class="app-input-password"
+    :type="props.shouldShowPassword ? 'text' : 'password'"
+    v-model="model"
+  />
 </template>
 
 <style scoped lang="scss">

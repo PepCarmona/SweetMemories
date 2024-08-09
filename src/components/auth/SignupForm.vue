@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { AuthStep } from '@/types/auth';
+import { AuthStep, type SignupUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInputMail from '../ui/AppInputMail.vue';
 import AppInputPassword from '../ui/AppInputPassword.vue';
 import AppInputText from '../ui/AppInputText.vue';
+import AppCheckbox from '../ui/AppCheckbox.vue';
+import { ref } from 'vue';
+
+const shouldShowPassword = ref(false);
 </script>
 
 <template>
@@ -40,16 +44,12 @@ import AppInputText from '../ui/AppInputText.vue';
           placeholder="Introduce tu contraseña"
           name="password"
           required
+          :should-show-password="shouldShowPassword"
         />
-      </div>
 
-      <div class="input">
-        <label class="label" for="confirm-password">Confirmar contraseña</label>
-        <AppInputPassword
-          placeholder="Introduce de nuevo tu contraseña"
-          name="confirm-password"
-          required
-        />
+        <AppCheckbox v-model="shouldShowPassword">
+          Mostrar contraseña
+        </AppCheckbox>
       </div>
     </div>
 
