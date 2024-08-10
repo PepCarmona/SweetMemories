@@ -1,12 +1,37 @@
 <script setup lang="ts">
-import { AuthStep } from '@/types/auth';
+import { AuthStep, type LoginUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
-import AppInputMail from '../ui/AppInputMail.vue';
-import AppInputPassword from '../ui/AppInputPassword.vue';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import { z } from 'zod';
+import type { TypeToZod } from '@/types/utils';
+import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
+
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema: toTypedSchema(
+    z.object<TypeToZod<LoginUser>>({
+      email: z.string({ required_error: 'Email is required' }).email(),
+      password: z
+        .string({ required_error: 'Password is required' })
+        .min(6, 'Password must contain at least 6 characters'),
+    })
+  ),
+});
+
+const [email, emailProps] = defineField('email', {
+  props: (state): AppInputProps => ({ validationError: state.errors[0] }),
+});
+const [password, passwordProps] = defineField('password', {
+  props: (state): AppInputProps => ({ validationError: state.errors[0] }),
+});
+
+const onSubmit = handleSubmit((values) => {
+  alert(values);
+});
 </script>
 
 <template>
-  <form class="signup-form">
+  <form class="signup-form" @submit="onSubmit" novalidate>
     <h1 class="title">Bienvenido de nuevo</h1>
 
     <h2 class="subtitle">
@@ -17,19 +42,25 @@ import AppInputPassword from '../ui/AppInputPassword.vue';
     <div class="inputs">
       <div class="input">
         <label class="label" for="mail">Correo electrónico</label>
-        <AppInputMail
+        <AppInput
           placeholder="Introduce tu correo electrónico"
           name="mail"
-          required
+          type="email"
+          v-model="email"
+          v-bind="emailProps"
+          :invalid="!!errors.email"
         />
       </div>
 
       <div class="input">
         <label class="label" for="password">Contraseña</label>
-        <AppInputPassword
+        <AppInput
           placeholder="Introduce tu contraseña"
           name="password"
-          required
+          type="password"
+          v-model="password"
+          v-bind="passwordProps"
+          :invalid="!!errors.password"
         />
         <AppButton
           class="forgot-password"

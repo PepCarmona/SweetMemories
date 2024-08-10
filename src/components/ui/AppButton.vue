@@ -89,6 +89,10 @@ const buttonClass = computed<string>(
     font-weight: 600;
 
     color: var(--color-primary);
+
+    @include on-hover {
+      color: var(--color-tertiary);
+    }
   }
 
   // Sizes

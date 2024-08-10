@@ -7,3 +7,5 @@ export type TypeToZod<T> = {
       : ZodType<T[K]>
     : ZodObject<TypeToZod<T[K]>>;
 };
+
+export type PickStringLiteral<A, B extends A> = B;
