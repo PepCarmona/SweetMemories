@@ -51,30 +51,27 @@ const onSubmit = handleSubmit((values) => {
     </h2>
 
     <div class="inputs">
-      <div class="input">
-        <label class="label" for="name">Nombre</label>
-        <AppInput
-          placeholder="Introduce tu nombre"
-          name="name"
-          type="text"
-          v-model="name"
-          v-bind="nameProps"
-        />
-      </div>
+      <AppInput
+        placeholder="Introduce tu nombre"
+        name="name"
+        type="text"
+        v-model="name"
+        v-bind="nameProps"
+      >
+        Nombre
+      </AppInput>
 
-      <div class="input">
-        <label class="label" for="mail">Correo electrónico</label>
-        <AppInput
-          placeholder="Introduce tu correo electrónico"
-          name="mail"
-          type="email"
-          v-model="email"
-          v-bind="emailProps"
-        />
-      </div>
+      <AppInput
+        placeholder="Introduce tu correo electrónico"
+        name="mail"
+        type="email"
+        v-model="email"
+        v-bind="emailProps"
+      >
+        Correo electrónico
+      </AppInput>
 
-      <div class="input">
-        <label class="label" for="password">Contraseña</label>
+      <div>
         <AppInput
           placeholder="Introduce tu contraseña"
           name="password"
@@ -82,7 +79,9 @@ const onSubmit = handleSubmit((values) => {
           v-model="password"
           v-bind="passwordProps"
           :should-show-password="shouldShowPassword"
-        />
+        >
+          Contraseña
+        </AppInput>
 
         <AppCheckbox class="show-password" v-model="shouldShowPassword">
           Mostrar contraseña
@@ -130,20 +129,8 @@ const onSubmit = handleSubmit((values) => {
     flex-direction: column;
     gap: var(--space-lg);
 
-    .input {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-
-      .label {
-        font-weight: 600;
-        margin-left: var(--space-xs);
-        margin-bottom: var(--space-xs);
-      }
-
-      .show-password {
-        margin-top: var(--space-xs);
-      }
+    .show-password {
+      margin-top: var(--space-xs);
     }
   }
 

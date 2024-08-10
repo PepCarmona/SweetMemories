@@ -40,20 +40,18 @@ const onSubmit = handleSubmit((values) => {
     </h2>
 
     <div class="inputs">
-      <div class="input">
-        <label class="label" for="mail">Correo electrónico</label>
-        <AppInput
-          placeholder="Introduce tu correo electrónico"
-          name="mail"
-          type="email"
-          v-model="email"
-          v-bind="emailProps"
-          :invalid="!!errors.email"
-        />
-      </div>
+      <AppInput
+        placeholder="Introduce tu correo electrónico"
+        name="mail"
+        type="email"
+        v-model="email"
+        v-bind="emailProps"
+        :invalid="!!errors.email"
+      >
+        Correo electrónico
+      </AppInput>
 
-      <div class="input">
-        <label class="label" for="password">Contraseña</label>
+      <div>
         <AppInput
           placeholder="Introduce tu contraseña"
           name="password"
@@ -61,7 +59,10 @@ const onSubmit = handleSubmit((values) => {
           v-model="password"
           v-bind="passwordProps"
           :invalid="!!errors.password"
-        />
+        >
+          Contraseña
+        </AppInput>
+
         <AppButton
           class="forgot-password"
           variant="link"
@@ -69,6 +70,7 @@ const onSubmit = handleSubmit((values) => {
             name: '/auth/[step]',
             params: { step: AuthStep.PasswordRecovery },
           }"
+          size="small"
         >
           ¿Olvidaste la contraseña?
         </AppButton>
@@ -115,20 +117,12 @@ const onSubmit = handleSubmit((values) => {
     flex-direction: column;
     gap: var(--space-lg);
 
-    .input {
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      gap: var(--space-xs);
-
-      .label {
-        font-weight: 600;
-        margin-left: var(--space-xs);
-      }
-
-      .forgot-password {
-        margin-left: auto;
-      }
+    .forgot-password {
+      display: block;
+      text-align: right;
+      margin-top: var(--space-xs);
+      margin-left: auto;
+      margin-right: var(--space-xs);
     }
   }
 

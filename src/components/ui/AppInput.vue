@@ -20,6 +20,9 @@ const props = withDefaults(defineProps<AppInputProps>(), {
 });
 
 const model = defineModel();
+const slots = defineSlots();
+
+const id = self.crypto.randomUUID();
 
 const boundProps = computed<AppInputProps>(() => ({
   name: props.name,
@@ -33,11 +36,15 @@ const inputType = computed<TextInputType>(() => {
 
   return props.shouldShowPassword ? 'text' : 'password';
 });
+
+const hasLabelSlot = computed<boolean>(() => !!slots['default']);
 </script>
 
 <template>
   <div class="app-input-text">
+    <label v-if="hasLabelSlot" :for="id"><slot /></label>
     <input
+      :id="id"
       :class="{ invalid: !!props.validationError }"
       v-model="model"
       v-bind="boundProps"
@@ -52,8 +59,17 @@ const inputType = computed<TextInputType>(() => {
 
 <style scoped lang="scss">
 .app-input-text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   width: 100%;
   text-align: start;
+
+  label {
+    font-weight: 600;
+    margin-left: var(--space-xs);
+    margin-bottom: var(--space-xs);
+  }
 
   input {
     padding: var(--space-sm) var(--space-md);
