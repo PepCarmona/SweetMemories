@@ -16,7 +16,13 @@ const { defineField, handleSubmit } = useForm({
       name: z.string({ required_error: 'Name is required' }),
       password: z
         .string({ required_error: 'Password is required' })
-        .min(6, 'Password must contain at least 6 characters'),
+        .min(6, 'Password must contain at least 6 characters')
+        .max(16, 'Password must contain less than 16 characters')
+        .regex(new RegExp(/[0-9]/), 'Password must contain at least one number')
+        .regex(
+          new RegExp(/[!@#$&*.]/),
+          'Password must contain at least one special character'
+        ),
     })
   ),
 });
