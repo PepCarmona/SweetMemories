@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStep, type SignupUser } from '@/types/auth';
+import { AuthStatus, AuthStep, type SignupUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
@@ -8,6 +8,9 @@ import { useForm } from 'vee-validate';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
 import { toTypedSchema } from '@vee-validate/zod';
+import { useAuthStore } from '@/stores/authStore';
+import AppToast from '../ui/AppToast.vue';
+import { useCloned } from '@vueuse/core';
 
 const { defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
@@ -40,6 +43,9 @@ const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 
+const authStore = useAuthStore();
+const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
+
 const shouldShowPassword = ref(false);
 
 const onSubmit = handleSubmit((values) => {
@@ -49,6 +55,15 @@ const onSubmit = handleSubmit((values) => {
 
 <template>
   <form class="signup-form" @submit="onSubmit" novalidate>
+    <AppToast
+      :should-show="authStore.authStatus === AuthStatus.FailedToSignUp"
+      variant="error"
+      @close="authStore.authStatus = initialAuthStatus"
+    >
+      Ha habido un problema al intentar registrarte. Por favor, inténtalo de
+      nuevo más adelante.
+    </AppToast>
+
     <h1 class="title">Crea tu cuenta</h1>
 
     <h2 class="subtitle">
@@ -137,6 +152,7 @@ const onSubmit = handleSubmit((values) => {
 
     .show-password {
       margin-top: var(--space-xs);
+      width: fit-content;
     }
   }
 
