@@ -26,4 +26,5 @@ export enum AuthStatus {
   LoggedOut = 'logged-out',
   FailedToSignUp = 'fail-to-sign-up',
   FailedToLogIn = 'fail-to-log-in',
+  FailedToRecoverPassword = 'fail-to-recover-password',
 }

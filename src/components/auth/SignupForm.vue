@@ -45,9 +45,11 @@ const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 
 const shouldShowPassword = ref(false);
 
-const onSubmit = handleSubmit((values) => {
-  alert(values);
-});
+const onSubmit = handleSubmit(({ name, email, password }) =>
+  authStore
+    .signUp({ name, email, password })
+    .then((user) => alert(JSON.stringify(user)))
+);
 </script>
 
 <template>
