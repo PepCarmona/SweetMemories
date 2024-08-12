@@ -1,13 +1,16 @@
 <script setup lang="ts">
-import { AuthStep, type LoginUser } from '@/types/auth';
+import { AuthStatus, AuthStep, type LoginUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
+import AppToast from '../ui/AppToast.vue';
+import { useAuthStore } from '@/stores/authStore';
+import { useCloned } from '@vueuse/core';
 
-const { errors, defineField, handleSubmit } = useForm({
+const { errors, defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<LoginUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
@@ -25,13 +28,27 @@ const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 
-const onSubmit = handleSubmit((values) => {
-  alert(values);
+const authStore = useAuthStore();
+const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
+
+const onSubmit = handleSubmit(({ email, password }) => {
+  authStore
+    .logIn({ email, password })
+    .then((user) => alert(JSON.stringify(user)));
 });
 </script>
 
 <template>
   <form class="signup-form" @submit="onSubmit" novalidate>
+    <AppToast
+      :should-show="authStore.authStatus === AuthStatus.FailedToLogIn"
+      variant="error"
+      @close="authStore.authStatus = initialAuthStatus"
+    >
+      Ha habido un problema al intentar iniciar sesión. Por favor, inténtalo de
+      nuevo más adelante.
+    </AppToast>
+
     <h1 class="title">Bienvenido de nuevo</h1>
 
     <h2 class="subtitle">
@@ -78,7 +95,13 @@ const onSubmit = handleSubmit((values) => {
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="medium">Inicia sesión</AppButton>
+      <AppButton
+        variant="primary"
+        size="medium"
+        :state="isSubmitting ? 'loading' : undefined"
+      >
+        Inicia sesión
+      </AppButton>
     </div>
 
     <div class="switch-auth-mode">

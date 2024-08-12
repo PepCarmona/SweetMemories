@@ -1,30 +1,35 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { RouteLocationRaw } from 'vue-router';
+import AppSpinner from './AppSpinner.vue';
 
 interface AppButtonProps {
   to?: RouteLocationRaw;
   href?: string;
   variant?: 'primary' | 'primary-outlined' | 'transparent' | 'link';
   size?: 'small' | 'medium' | 'large';
+  state?: 'loading';
 }
 const props = defineProps<AppButtonProps>();
 
 const buttonClass = computed<string>(
-  () => `app-button ${props.variant} ${props.size}`
+  () => `app-button ${props.variant} ${props.size}  ${props.state}`
 );
 </script>
 
 <template>
   <a v-if="props.href" :href="props.href" :class="buttonClass">
+    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
     <slot />
   </a>
 
   <RouterLink v-else-if="props.to" :to="props.to" :class="buttonClass">
+    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
     <slot />
   </RouterLink>
 
   <button v-else :class="buttonClass">
+    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
     <slot />
   </button>
 </template>
@@ -109,6 +114,21 @@ const buttonClass = computed<string>(
   &.large {
     padding: var(--space-md) var(--space-xl);
     font-size: var(--font-size-lg);
+  }
+
+  // State
+  &.loading {
+    filter: contrast(65%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    pointer-events: none;
+
+    .spinner {
+      height: 1em;
+      width: 1em;
+    }
   }
 }
 </style>

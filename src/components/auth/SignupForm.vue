@@ -12,7 +12,7 @@ import { useAuthStore } from '@/stores/authStore';
 import AppToast from '../ui/AppToast.vue';
 import { useCloned } from '@vueuse/core';
 
-const { defineField, handleSubmit } = useForm({
+const { defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<SignupUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
@@ -31,10 +31,7 @@ const { defineField, handleSubmit } = useForm({
 });
 
 const [email, emailProps] = defineField('email', {
-  props: (state): AppInputProps => {
-    console.log({ state }, { validationError: state.errors[0] });
-    return { validationError: state.errors[0] };
-  },
+  props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 const [name, nameProps] = defineField('name', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
@@ -111,7 +108,13 @@ const onSubmit = handleSubmit((values) => {
     </div>
 
     <div class="buttons">
-      <AppButton variant="primary" size="medium"> Crear cuenta </AppButton>
+      <AppButton
+        variant="primary"
+        size="medium"
+        :state="isSubmitting ? 'loading' : undefined"
+      >
+        Crear cuenta
+      </AppButton>
     </div>
 
     <div class="switch-auth-mode">
