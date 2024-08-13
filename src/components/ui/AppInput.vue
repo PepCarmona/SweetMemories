@@ -50,6 +50,7 @@ const hasLabelSlot = computed<boolean>(() => !!slots['default']);
       v-bind="boundProps"
       :type="inputType"
     />
+    <!-- TODO: Avoid layout shift and add transition -->
     <div v-if="!!props.validationError" class="error">
       <ErrorIcon class="icon" />
       {{ props.validationError }}

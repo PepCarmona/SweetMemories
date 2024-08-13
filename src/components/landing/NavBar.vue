@@ -2,7 +2,8 @@
 import { useWindowSize } from '@vueuse/core';
 import AppButton from '../ui/AppButton.vue';
 import { computed } from 'vue';
-import LogoButton from '../ui/LogoButton.vue';
+import AppLogo from '../ui/AppLogo.vue';
+import { AuthStep } from '@/types/auth';
 
 const { width } = useWindowSize();
 
@@ -11,12 +12,14 @@ const isSmallWindow = computed<boolean>(() => width.value < 800);
 
 <template>
   <nav class="nav-bar">
-    <LogoButton />
+    <AppButton variant="transparent" to="/">
+      <AppLogo />
+    </AppButton>
 
     <AppButton
       variant="primary-outlined"
       :size="isSmallWindow ? 'small' : 'medium'"
-      to="/auth"
+      :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
     >
       Únete ahora
     </AppButton>

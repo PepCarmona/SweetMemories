@@ -83,12 +83,10 @@ const buttonClass = computed<string>(
   }
 
   &.transparent {
-    padding: 0 !important;
     background-color: transparent;
   }
 
   &.link {
-    padding: 0 !important;
     background-color: transparent;
     font-family: var(--font-family-action);
     font-weight: 600;

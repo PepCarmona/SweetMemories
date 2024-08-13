@@ -7,9 +7,9 @@ import AppButton from '../ui/AppButton.vue';
     <span class="copyright">
       © 2024 Cudlo. Todos los derechos reservados.
     </span>
-    <AppButton variant="transparent" size="medium"
-      >Política de privacidad</AppButton
-    >
+    <AppButton variant="transparent" size="medium">
+      Política de privacidad
+    </AppButton>
     <AppButton variant="transparent" size="medium">Términos de Uso</AppButton>
     <AppButton variant="transparent" size="medium">Contacto</AppButton>
   </footer>

@@ -143,9 +143,7 @@ const onSubmit = handleSubmit(({ email, password }) => {
     .forgot-password {
       display: block;
       text-align: right;
-      margin-top: var(--space-xs);
       margin-left: auto;
-      margin-right: var(--space-xs);
     }
   }
 

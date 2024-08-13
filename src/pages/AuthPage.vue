@@ -3,10 +3,12 @@ import AuthBackground from '@/components/auth/AuthBackground.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import PasswordRecoveryForm from '@/components/auth/PasswordRecoveryForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
-import LogoButton from '@/components/ui/LogoButton.vue';
+import AppButton from '@/components/ui/AppButton.vue';
+import AppLogo from '@/components/ui/AppLogo.vue';
 import { AuthStep } from '@/types/auth';
 
 definePage({
+  // TODO: Look into issue on unplugin-vue-router package for params coming from definePage
   path: '/auth/:step',
   name: 'auth',
   props: true,
@@ -22,7 +24,10 @@ const props = defineProps<AuthPageProps>();
   <main class="auth-page">
     <AuthBackground class="background" />
     <div class="form-container">
-      <LogoButton fixed-size />
+      <AppButton variant="transparent" to="/">
+        <AppLogo />
+      </AppButton>
+
       <SignupForm v-if="props.step === AuthStep.Signup" />
       <LoginForm v-else-if="props.step === AuthStep.Login" />
       <PasswordRecoveryForm
