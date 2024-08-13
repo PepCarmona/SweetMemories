@@ -46,6 +46,7 @@ const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
 const onSubmit = handleSubmit(({ name, email, password }) =>
+  // TODO: handle specific error codes text
   authStore
     .signUp({ name, email, password })
     .then((user) => alert(JSON.stringify(user)))
@@ -133,6 +134,7 @@ const onSubmit = handleSubmit(({ name, email, password }) =>
 </template>
 
 <style scoped lang="scss">
+// TODO: extract common styles of signup login and passwordRecovery into layout component
 .signup-form {
   text-align: center;
   width: 100%;

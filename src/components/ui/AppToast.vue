@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// TODO: move into root component and create toastSore
 import AppButton from './AppButton.vue';
 import AppTransitionSlideDown from './AppTransitionSlideDown.vue';
 import CloseIcon from './icons/CloseIcon.vue';

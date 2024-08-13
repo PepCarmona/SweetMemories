@@ -29,6 +29,7 @@ import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
 </template>
 
 <style scoped lang="scss">
+// TODO: optimize for extra large desktops
 .header-hero-section {
   .content {
     padding: var(--space-md);
