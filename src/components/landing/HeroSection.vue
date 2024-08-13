@@ -17,7 +17,7 @@ import FamilyIllustration from '../ui/illustrations/FamilyIllustration.vue';
       <AppButton
         variant="primary"
         size="large"
-        :to="{ name: '/auth/[step]', params: { step: AuthStep.Signup } }"
+        :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
       >
         Únete ahora
       </AppButton>

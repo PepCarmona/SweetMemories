@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import AppButton from './ui/AppButton.vue';
+import AppButton from '../ui/AppButton.vue';
 </script>
 
 <template>
-  <footer class="the-footer">
-    <span class="copyright">© Copyright 2021 Cudlo</span>
+  <footer class="landing-footer">
+    <span class="copyright">
+      © 2024 Cudlo. Todos los derechos reservados.
+    </span>
     <AppButton variant="transparent" size="medium"
       >Política de privacidad</AppButton
     >
@@ -14,7 +16,7 @@ import AppButton from './ui/AppButton.vue';
 </template>
 
 <style scoped lang="scss">
-.the-footer {
+.landing-footer {
   margin-top: var(--space-xxxl);
   padding: var(--space-md);
   text-align: center;

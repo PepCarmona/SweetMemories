@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import NavBar from './home/NavBar.vue';
+import NavBar from './NavBar.vue';
 </script>
 
 <template>
-  <header class="the-header">
+  <header class="landing-header">
     <NavBar />
   </header>
 </template>
 
 <style scoped lang="scss">
-.the-header {
+.landing-header {
   position: sticky;
   top: 0;
   background-color: var(--color-light);

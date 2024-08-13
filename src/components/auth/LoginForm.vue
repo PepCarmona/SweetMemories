@@ -84,7 +84,7 @@ const onSubmit = handleSubmit(({ email, password }) => {
           class="forgot-password"
           variant="link"
           :to="{
-            name: '/auth/[step]',
+            name: 'auth',
             params: { step: AuthStep.PasswordRecovery },
           }"
           size="small"
@@ -109,7 +109,7 @@ const onSubmit = handleSubmit(({ email, password }) => {
       &nbsp;
       <AppButton
         variant="link"
-        :to="{ name: '/auth/[step]', params: { step: AuthStep.Signup } }"
+        :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
       >
         Regístrate
       </AppButton>

@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import AuthBackground from '@/components/auth/AuthBackground.vue';
 import LoginForm from '@/components/auth/LoginForm.vue';
@@ -8,6 +7,8 @@ import LogoButton from '@/components/ui/LogoButton.vue';
 import { AuthStep } from '@/types/auth';
 
 definePage({
+  path: '/auth/:step',
+  name: 'auth',
   props: true,
 });
 

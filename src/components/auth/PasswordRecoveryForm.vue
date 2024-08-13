@@ -65,7 +65,7 @@ const onSubmit = handleSubmit(({ email }) => {
       </AppButton>
       <AppButton
         variant="link"
-        :to="{ name: '/auth/[step]', params: { step: AuthStep.Login } }"
+        :to="{ name: 'auth', params: { step: AuthStep.Login } }"
       >
         Go back
       </AppButton>

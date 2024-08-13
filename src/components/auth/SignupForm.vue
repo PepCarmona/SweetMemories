@@ -46,7 +46,7 @@ const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
 const onSubmit = handleSubmit(({ name, email, password }) =>
-  // TODO: handle specific error codes text
+  // TODO: handle specific error codes text in signup, login and passwordRecovery
   authStore
     .signUp({ name, email, password })
     .then((user) => alert(JSON.stringify(user)))
@@ -104,6 +104,7 @@ const onSubmit = handleSubmit(({ name, email, password }) =>
           Contraseña
         </AppInput>
 
+        <!-- TODO: Add live password validation in popup -->
         <AppCheckbox class="show-password" v-model="shouldShowPassword">
           Mostrar contraseña
         </AppCheckbox>
@@ -125,7 +126,7 @@ const onSubmit = handleSubmit(({ name, email, password }) =>
       &nbsp;
       <AppButton
         variant="link"
-        :to="{ name: '/auth/[step]', params: { step: AuthStep.Login } }"
+        :to="{ name: 'auth', params: { step: AuthStep.Login } }"
       >
         Inicia sesión
       </AppButton>
