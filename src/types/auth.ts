@@ -13,13 +13,10 @@ export type SignupUser = LoginUser & {
   name: string;
 };
 
-export type ExistingUser = {
+export type AppUser = {
   email: string;
-} & ExistingUserMetadata;
-
-export interface ExistingUserMetadata {
   name: string;
-}
+};
 
 export enum AuthStatus {
   LoggedIn = 'logged-in',

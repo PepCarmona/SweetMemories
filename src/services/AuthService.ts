@@ -1,8 +1,8 @@
-import type { ExistingUser, ExistingUserMetadata } from '@/types/auth';
+import type { AppUser } from '@/types/auth';
 import {
   createClient,
+  type Subscription,
   type User,
-  type UserMetadata,
 } from '@supabase/supabase-js';
 import type { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
 
@@ -16,7 +16,7 @@ export class AuthService {
     email: string,
     password: string,
     name: string
-  ): Promise<ExistingUser> {
+  ): Promise<AppUser> {
     const { data, error } = await this.client.signUp({
       email,
       password,
@@ -36,13 +36,13 @@ export class AuthService {
       throw new Error('Registered user not available');
     }
 
-    return this.getExistingUser(data.user);
+    return this.mapAppUser(data.user);
   }
 
   public async signInWithEmail(
     email: string,
     password: string
-  ): Promise<ExistingUser> {
+  ): Promise<AppUser> {
     const { data, error } = await this.client.signInWithPassword({
       email,
       password,
@@ -52,7 +52,7 @@ export class AuthService {
       return Promise.reject(error);
     }
 
-    return this.getExistingUser(data.user);
+    return this.mapAppUser(data.user);
   }
 
   public async resetPassword(email: string): Promise<void> {
@@ -65,7 +65,7 @@ export class AuthService {
     }
   }
 
-  public async updatePassword(newPassword: string): Promise<ExistingUser> {
+  public async updatePassword(newPassword: string): Promise<AppUser> {
     const { data, error } = await this.client.updateUser({
       password: newPassword,
     });
@@ -74,7 +74,7 @@ export class AuthService {
       return Promise.reject(error);
     }
 
-    return this.getExistingUser(data.user);
+    return this.mapAppUser(data.user);
   }
 
   public async signOut(): Promise<void> {
@@ -85,28 +85,28 @@ export class AuthService {
     }
   }
 
-  private getExistingUser(user: User): ExistingUser {
-    const { email } = user;
+  public listenToAuthEvents(
+    callback: (user: AppUser | null) => void | Promise<void>
+  ): Subscription {
+    return this.client.onAuthStateChange((_, session) => {
+      const user = session?.user || null;
+      const appUser = user ? this.mapAppUser(user) : null;
 
-    if (email === undefined) {
+      callback(appUser);
+    }).data.subscription;
+  }
+
+  private mapAppUser(user: User): AppUser {
+    const { email } = user;
+    const { name } = user.user_metadata;
+
+    if (email === undefined || typeof name !== 'string') {
       throw new Error('Invalid user.');
     }
-
-    const { name } = this.validateUserMetadata(user.user_metadata);
 
     return {
       email,
       name,
     };
-  }
-
-  private validateUserMetadata(metadata: UserMetadata): ExistingUserMetadata {
-    const { name } = metadata;
-
-    if (typeof name !== 'string') {
-      throw new Error('Invalid user metadata.');
-    }
-
-    return { name };
   }
 }

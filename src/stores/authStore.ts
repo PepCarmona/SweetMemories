@@ -1,26 +1,29 @@
 import { AuthService } from '@/services/AuthService';
 import {
   AuthStatus,
-  type ExistingUser,
+  type AppUser,
   type LoginUser,
   type SignupUser,
 } from '@/types/auth';
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export const useAuthStore = defineStore('auth', () => {
   // State
   const service = new AuthService();
-  const currentUser = ref<ExistingUser | null>(null);
+  const currentUser = ref<AppUser | null>(null);
   const authStatus = ref<AuthStatus>(AuthStatus.LoggedOut);
+
+  // Getters
+  const isLoggedIn = computed(() => !!currentUser.value);
 
   // Actions
   async function signUp({
     email,
     name,
     password,
-  }: SignupUser): Promise<ExistingUser> {
-    let signedUpUser: ExistingUser;
+  }: SignupUser): Promise<AppUser> {
+    let signedUpUser: AppUser;
 
     try {
       signedUpUser = await service.signUpNewUser(email, password, name);
@@ -36,8 +39,8 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  async function logIn({ email, password }: LoginUser): Promise<ExistingUser> {
-    let signedUpUser: ExistingUser;
+  async function logIn({ email, password }: LoginUser): Promise<AppUser> {
+    let signedUpUser: AppUser;
 
     try {
       signedUpUser = await service.signInWithEmail(email, password);
@@ -65,9 +68,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  service.listenToAuthEvents((user) => {
+    currentUser.value = user;
+  });
+
   return {
     // State
     authStatus,
+    currentUser,
+
+    // Getters
+    isLoggedIn,
 
     // Actions
     signUp,
