@@ -5,6 +5,7 @@ import {
   type LoginUser,
   type SignupUser,
 } from '@/types/auth';
+import { watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
@@ -13,6 +14,7 @@ export const useAuthStore = defineStore('auth', () => {
   const service = new AuthService();
   const currentUser = ref<AppUser | null>(null);
   const authStatus = ref<AuthStatus>(AuthStatus.LoggedOut);
+  const hasInitiatedSession = ref<boolean>(false);
 
   // Getters
   const isLoggedIn = computed(() => !!currentUser.value);
@@ -68,8 +70,22 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  service.listenToAuthEvents((user) => {
+  async function waitForSessionInitiated(): Promise<void> {
+    return new Promise((resolve) => {
+      if (hasInitiatedSession.value) {
+        resolve();
+      } else {
+        watchOnce(hasInitiatedSession, () => resolve());
+      }
+    });
+  }
+
+  service.listenToAuthEvents((event, user) => {
     currentUser.value = user;
+
+    if (event === 'INITIAL_SESSION') {
+      hasInitiatedSession.value = true;
+    }
   });
 
   return {
@@ -84,5 +100,6 @@ export const useAuthStore = defineStore('auth', () => {
     signUp,
     logIn,
     sendPasswordRecovery,
+    waitForSessionInitiated,
   };
 });

@@ -1,6 +1,7 @@
 import type { AppUser } from '@/types/auth';
 import {
   createClient,
+  type AuthChangeEvent,
   type Subscription,
   type User,
 } from '@supabase/supabase-js';
@@ -86,13 +87,16 @@ export class AuthService {
   }
 
   public listenToAuthEvents(
-    callback: (user: AppUser | null) => void | Promise<void>
+    callback: (
+      event: AuthChangeEvent,
+      user: AppUser | null
+    ) => void | Promise<void>
   ): Subscription {
-    return this.client.onAuthStateChange((_, session) => {
+    return this.client.onAuthStateChange((event, session) => {
       const user = session?.user || null;
       const appUser = user ? this.mapAppUser(user) : null;
 
-      callback(appUser);
+      callback(event, appUser);
     }).data.subscription;
   }
 

@@ -16,7 +16,7 @@ const authStore = useAuthStore();
   <main class="feed-page">
     <h1>Feed</h1>
     <div v-if="authStore.currentUser">
-      <p v-for="property of authStore.currentUser" :key="property">
+      <p v-for="property in authStore.currentUser" :key="property">
         {{ property }}
       </p>
     </div>
