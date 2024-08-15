@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import FeedHeader from '@/components/feed/FeedHeader.vue';
 import { useAuthStore } from '@/stores/authStore';
-import { useRouter } from 'vue-router';
+import { useNavigationStore } from '@/stores/navigationStore';
 
 definePage({
   path: '/feed',
@@ -11,13 +11,13 @@ definePage({
   },
 });
 
-const router = useRouter();
 const authStore = useAuthStore();
+const navigationStore = useNavigationStore();
 
 async function logOutAndRedirect(): Promise<void> {
   await authStore.logOut();
 
-  await router.push('/');
+  await navigationStore.navigateToLandingPage();
 }
 </script>
 

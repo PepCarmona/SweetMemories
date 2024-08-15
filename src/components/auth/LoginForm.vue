@@ -9,6 +9,7 @@ import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppToast from '../ui/AppToast.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useCloned } from '@vueuse/core';
+import { useNavigationStore } from '@/stores/navigationStore';
 
 const { errors, defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -29,12 +30,16 @@ const [password, passwordProps] = defineField('password', {
 });
 
 const authStore = useAuthStore();
+const navigationStore = useNavigationStore();
+
 const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 
-const onSubmit = handleSubmit(({ email, password }) => {
-  authStore
-    .logIn({ email, password })
-    .then((user) => alert(JSON.stringify(user)));
+const onSubmit = handleSubmit(async ({ email, password }) => {
+  {
+    await authStore.logIn({ email, password });
+
+    await navigationStore.navigateToFeedPage();
+  }
 });
 </script>
 

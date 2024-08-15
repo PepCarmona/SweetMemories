@@ -9,7 +9,7 @@ import { watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
-export const useAuthStore = defineStore('auth', () => {
+export const useAuthStore = defineStore('AuthStore', () => {
   // State
   const service = new AuthService();
   const currentUser = ref<AppUser | null>(null);

@@ -24,9 +24,9 @@ const [email, emailProps] = defineField('email', {
 const authStore = useAuthStore();
 const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 
-const onSubmit = handleSubmit(({ email }) => {
-  authStore.sendPasswordRecovery(email).then(() => alert('Password recovery'));
-});
+const onSubmit = handleSubmit(({ email }) =>
+  authStore.sendPasswordRecovery(email)
+);
 </script>
 
 <template>

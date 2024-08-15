@@ -11,6 +11,7 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useAuthStore } from '@/stores/authStore';
 import AppToast from '../ui/AppToast.vue';
 import { useCloned } from '@vueuse/core';
+import { useNavigationStore } from '@/stores/navigationStore';
 
 const { defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -40,16 +41,20 @@ const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 
+// TODO: move stores to page level
 const authStore = useAuthStore();
-const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
+const navigationStore = useNavigationStore();
 
+const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
-const onSubmit = handleSubmit(({ name, email, password }) =>
+const onSubmit = handleSubmit(async ({ name, email, password }) =>
   // TODO: handle specific error codes text in signup, login and passwordRecovery
-  authStore
-    .signUp({ name, email, password })
-    .then((user) => alert(JSON.stringify(user)))
+  {
+    await authStore.signUp({ name, email, password });
+
+    await navigationStore.navigateToFeedPage();
+  }
 );
 </script>
 
