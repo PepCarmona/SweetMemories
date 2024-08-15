@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // TODO: move into root component and create toastSore
 import AppButton from './AppButton.vue';
-import AppTransitionSlideDown from './AppTransitionSlideDown.vue';
+import AppTransitionSlide from './AppTransitionSlide.vue';
 import CloseIcon from './icons/CloseIcon.vue';
 
 interface AppToastProps {
@@ -18,7 +18,7 @@ const emit = defineEmits<AppToastEmits>();
 </script>
 
 <template>
-  <AppTransitionSlideDown>
+  <AppTransitionSlide>
     <div
       :class="{
         'app-toast': true,
@@ -32,7 +32,7 @@ const emit = defineEmits<AppToastEmits>();
         <CloseIcon class="close-icon" />
       </AppButton>
     </div>
-  </AppTransitionSlideDown>
+  </AppTransitionSlide>
 </template>
 
 <style scoped lang="scss">

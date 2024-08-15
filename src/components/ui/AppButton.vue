@@ -47,7 +47,7 @@ const buttonClass = computed<string>(
   text-decoration: none;
   transition: outline 0s;
 
-  &:focus {
+  &:focus-visible {
     outline: 3px solid var(--color-tertiary);
   }
 

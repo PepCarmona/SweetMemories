@@ -58,6 +58,17 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  async function logOut(): Promise<void> {
+    try {
+      await service.signOut();
+
+      currentUser.value = null;
+      authStatus.value = AuthStatus.LoggedOut;
+    } catch (error) {
+      Promise.reject(error);
+    }
+  }
+
   async function sendPasswordRecovery(email: string): Promise<void> {
     try {
       await service.resetPassword(email);
@@ -99,6 +110,7 @@ export const useAuthStore = defineStore('auth', () => {
     // Actions
     signUp,
     logIn,
+    logOut,
     sendPasswordRecovery,
     waitForSessionInitiated,
   };
