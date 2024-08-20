@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { AppUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppLogo from '../ui/AppLogo.vue';
 import LogoutIcon from '../ui/icons/LogoutIcon.vue';
@@ -8,7 +7,7 @@ import { ref } from 'vue';
 import AppTransitionFade from '../ui/AppTransitionFade.vue';
 
 interface FeedHeaderProps {
-  user: AppUser;
+  userName: string;
 }
 const props = defineProps<FeedHeaderProps>();
 
@@ -33,7 +32,7 @@ function togglePopover(): void {
       /></AppButton>
       <AppTransitionFade>
         <div v-if="isPopoverOpen" class="popover">
-          <div class="name">{{ props.user.name }}</div>
+          <div class="name">{{ props.userName }}</div>
           <AppButton
             variant="transparent"
             class="logout-button"

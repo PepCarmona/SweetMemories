@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import FeedHeader from '@/components/feed/FeedHeader.vue';
+import WelcomeSection from '@/components/feed/WelcomeSection.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useNavigationStore } from '@/stores/navigationStore';
 
@@ -23,17 +24,19 @@ async function logOutAndRedirect(): Promise<void> {
 
 <template>
   <template v-if="authStore.currentUser">
-    <FeedHeader :user="authStore.currentUser" @log-out="logOutAndRedirect" />
+    <FeedHeader
+      :user-name="authStore.currentUser.name"
+      @log-out="logOutAndRedirect"
+    />
 
     <main class="feed-page">
-      <h1>Feed</h1>
-      <div>
-        <p v-for="property in authStore.currentUser" :key="property">
-          {{ property }}
-        </p>
-      </div>
+      <WelcomeSection />
     </main>
   </template>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.feed-page {
+  padding: var(--space-md);
+}
+</style>

@@ -99,17 +99,17 @@ const buttonClass = computed<string>(
   }
 
   // Sizes
-  &.small {
+  &.small:not(.link) {
     padding: var(--space-xs) var(--space-sm);
     font-size: var(--font-size-sm);
   }
 
-  &.medium {
+  &.medium:not(.link) {
     padding: var(--space-sm) var(--space-lg);
     font-size: var(--font-size-md);
   }
 
-  &.large {
+  &.large:not(.link) {
     padding: var(--space-md) var(--space-xl);
     font-size: var(--font-size-lg);
   }
