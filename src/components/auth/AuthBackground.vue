@@ -26,7 +26,7 @@ import BlobTwo from '@/components/ui/blobs/BlobTwo.vue';
   position: absolute;
   height: 100%;
   width: 100%;
-  z-index: -1;
+  z-index: var(--layer-background);
 
   .blob {
     position: absolute;

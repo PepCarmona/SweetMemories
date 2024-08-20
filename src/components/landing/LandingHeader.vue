@@ -13,6 +13,6 @@ import NavBar from './NavBar.vue';
   position: sticky;
   top: 0;
   background-color: var(--color-light);
-  z-index: 9;
+  z-index: var(--layer-forward);
 }
 </style>

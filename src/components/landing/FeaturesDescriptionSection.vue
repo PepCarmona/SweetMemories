@@ -102,7 +102,7 @@ import StoreIllustration from '../ui/illustrations/StoreIllustration.vue';
       position: absolute;
       height: 100%;
       width: 50%;
-      z-index: -1;
+      z-index: var(--layer-background);
       overflow: hidden;
     }
 
