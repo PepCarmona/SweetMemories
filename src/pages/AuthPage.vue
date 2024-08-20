@@ -12,9 +12,6 @@ definePage({
   path: '/auth/:step',
   name: 'auth',
   props: true,
-  meta: {
-    onlyForAnonymous: true,
-  },
 });
 
 interface AuthPageProps {

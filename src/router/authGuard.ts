@@ -12,7 +12,7 @@ export function useAuthGuard(router: Router) {
       return { name: 'auth', params: { step: AuthStep.Login } };
     }
 
-    if (authStore.isLoggedIn && to.meta.onlyForAnonymous) {
+    if (authStore.isLoggedIn && to.name === 'auth') {
       return { name: 'feed' };
     }
   });
