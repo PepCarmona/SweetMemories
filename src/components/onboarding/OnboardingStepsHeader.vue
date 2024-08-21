@@ -17,10 +17,8 @@ const props = defineProps<OnboardingStepsHeaderProps>();
         <BlobOne class="blob" />
         1
       </div>
-      <div class="description">Regístrate</div>
+      <div class="description">Crea tu cuenta</div>
     </div>
-
-    <div class="progress-bar" />
 
     <div class="step profile-step active">
       <div class="bullet">
@@ -29,8 +27,6 @@ const props = defineProps<OnboardingStepsHeaderProps>();
       </div>
       <div class="description">Completa tu perfil</div>
     </div>
-
-    <div class="progress-bar" />
 
     <div
       :class="{
@@ -51,14 +47,17 @@ const props = defineProps<OnboardingStepsHeaderProps>();
 <style scoped lang="scss">
 .onboarding-steps-header {
   --bullet-size: 30px;
+  --gap: var(--space-sm);
 
   display: flex;
+  gap: var(--gap);
+  width: 100%;
 
   .step {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(100% / 3);
+    width: 100%;
 
     .bullet {
       position: relative;
@@ -107,7 +106,7 @@ const props = defineProps<OnboardingStepsHeaderProps>();
         content: '';
         position: absolute;
         height: 1px;
-        width: calc(100% - var(--bullet-size) * 2);
+        width: calc(100% - var(--bullet-size) * 2 + var(--gap));
 
         top: calc(var(--bullet-size) / 2);
         right: 50%;

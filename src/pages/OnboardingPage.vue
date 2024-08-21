@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import OnboardingStepsHeader from '@/components/onboarding/OnboardingStepsHeader.vue';
+import FormPageLayout from '@/layouts/FormPageLayout.vue';
 import type { OnboardingStep } from '@/types/onboarding';
 
 definePage({
@@ -16,11 +17,15 @@ const props = defineProps<OnboardingPageProps>();
 </script>
 
 <template>
-  <OnboardingStepsHeader :step="props.step" />
+  <FormPageLayout class="onboarding-page">
+    <template #header>
+      <OnboardingStepsHeader :step="props.step" />
+    </template>
 
-  <main class="onboarding-page">
-    {{ props.step }}
-  </main>
+    <template #form>
+      {{ props.step }}
+    </template>
+  </FormPageLayout>
 </template>
 
 <style scoped lang="scss"></style>
