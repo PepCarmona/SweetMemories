@@ -99,19 +99,28 @@ const buttonClass = computed<string>(
   }
 
   // Sizes
-  &.small:not(.link) {
-    padding: var(--space-xs) var(--space-sm);
+  &.small {
     font-size: var(--font-size-sm);
+
+    &:not(.link) {
+      padding: var(--space-xs) var(--space-sm);
+    }
   }
 
-  &.medium:not(.link) {
-    padding: var(--space-sm) var(--space-lg);
+  &.medium {
     font-size: var(--font-size-md);
+
+    &:not(.link) {
+      padding: var(--space-sm) var(--space-lg);
+    }
   }
 
-  &.large:not(.link) {
-    padding: var(--space-md) var(--space-xl);
+  &.large {
     font-size: var(--font-size-lg);
+
+    &:not(.link) {
+      padding: var(--space-md) var(--space-xl);
+    }
   }
 
   // State
