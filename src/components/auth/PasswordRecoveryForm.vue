@@ -8,6 +8,7 @@ import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppToast from '../ui/AppToast.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useCloned } from '@vueuse/core';
+import FormLayout from '@/layouts/FormLayout.vue';
 
 const { errors, defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -30,19 +31,19 @@ const onSubmit = handleSubmit(({ email }) =>
 </script>
 
 <template>
-  <form class="password-recovery-form" @submit="onSubmit" novalidate>
-    <AppToast
-      :should-show="authStore.authStatus === AuthStatus.FailedToRecoverPassword"
-      variant="error"
-      @close="authStore.authStatus = initialAuthStatus"
-    >
-      Ha habido un problema al intentar enviar el email de recuperación de
-      contraseña. Por favor, inténtalo de nuevo más adelante.
-    </AppToast>
+  <AppToast
+    :should-show="authStore.authStatus === AuthStatus.FailedToRecoverPassword"
+    variant="error"
+    @close="authStore.authStatus = initialAuthStatus"
+  >
+    Ha habido un problema al intentar enviar el email de recuperación de
+    contraseña. Por favor, inténtalo de nuevo más adelante.
+  </AppToast>
 
-    <h1 class="title">Recupera tu contraseña</h1>
+  <FormLayout class="password-recovery-form" @submit="onSubmit" novalidate>
+    <template #title>Recupera tu contraseña</template>
 
-    <div class="inputs">
+    <template #inputs>
       <AppInput
         placeholder="Introduce tu correo electrónico"
         name="mail"
@@ -53,9 +54,9 @@ const onSubmit = handleSubmit(({ email }) =>
       >
         Correo electrónico
       </AppInput>
-    </div>
+    </template>
 
-    <div class="buttons">
+    <template #buttons>
       <AppButton
         variant="primary"
         size="medium"
@@ -69,34 +70,6 @@ const onSubmit = handleSubmit(({ email }) =>
       >
         Go back
       </AppButton>
-    </div>
-  </form>
+    </template>
+  </FormLayout>
 </template>
-
-<style scoped lang="scss">
-.password-recovery-form {
-  text-align: center;
-  width: 100%;
-
-  .title {
-    font-family: var(--font-family-title);
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-  }
-
-  .inputs {
-    margin-top: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-  }
-
-  .buttons {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-}
-</style>

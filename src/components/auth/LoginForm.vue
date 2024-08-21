@@ -10,6 +10,7 @@ import AppToast from '../ui/AppToast.vue';
 import { useAuthStore } from '@/stores/authStore';
 import { useCloned } from '@vueuse/core';
 import { useNavigationStore } from '@/stores/navigationStore';
+import FormLayout from '@/layouts/FormLayout.vue';
 
 const { errors, defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -44,24 +45,24 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
 </script>
 
 <template>
-  <form class="signup-form" @submit="onSubmit" novalidate>
-    <AppToast
-      :should-show="authStore.authStatus === AuthStatus.FailedToLogIn"
-      variant="error"
-      @close="authStore.authStatus = initialAuthStatus"
-    >
-      Ha habido un problema al intentar iniciar sesión. Por favor, inténtalo de
-      nuevo más adelante.
-    </AppToast>
+  <AppToast
+    :should-show="authStore.authStatus === AuthStatus.FailedToLogIn"
+    variant="error"
+    @close="authStore.authStatus = initialAuthStatus"
+  >
+    Ha habido un problema al intentar iniciar sesión. Por favor, inténtalo de
+    nuevo más adelante.
+  </AppToast>
 
-    <h1 class="title">Bienvenido de nuevo</h1>
+  <FormLayout class="login-form" @submit="onSubmit" novalidate>
+    <template #title>Bienvenido de nuevo</template>
 
-    <h2 class="subtitle">
+    <template #subtitle>
       Accede a tu cuenta y sigue compartiendo y disfrutando de tus recuerdos
       familiares.
-    </h2>
+    </template>
 
-    <div class="inputs">
+    <template #inputs>
       <AppInput
         placeholder="Introduce tu correo electrónico"
         name="mail"
@@ -97,9 +98,9 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
           ¿Olvidaste la contraseña?
         </AppButton>
       </div>
-    </div>
+    </template>
 
-    <div class="buttons">
+    <template #buttons>
       <AppButton
         variant="primary"
         size="medium"
@@ -107,60 +108,27 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
       >
         Inicia sesión
       </AppButton>
-    </div>
 
-    <div class="switch-auth-mode">
-      <span>¿Aún no tienes una cuenta?</span>
-      &nbsp;
-      <AppButton
-        variant="link"
-        :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
-      >
-        Regístrate
-      </AppButton>
-    </div>
-  </form>
+      <div class="switch-auth-mode">
+        <span>¿Aún no tienes una cuenta?</span>
+        &nbsp;
+        <AppButton
+          variant="link"
+          :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
+        >
+          Regístrate
+        </AppButton>
+      </div>
+    </template>
+  </FormLayout>
 </template>
 
 <style scoped lang="scss">
-.signup-form {
-  text-align: center;
-  width: 100%;
-
-  .title {
-    font-family: var(--font-family-title);
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-  }
-
-  .subtitle {
-    font-family: var(--font-family-title);
-    font-size: var(--font-size-md);
-  }
-
-  .inputs {
-    margin-top: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-
-    .forgot-password {
-      display: block;
-      text-align: right;
-      margin-left: auto;
-    }
-  }
-
-  .buttons {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .switch-auth-mode {
-    margin-top: var(--space-lg);
+.login-form {
+  .forgot-password {
+    display: block;
+    text-align: right;
+    margin-left: auto;
   }
 }
 </style>

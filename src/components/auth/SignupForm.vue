@@ -12,6 +12,7 @@ import { useAuthStore } from '@/stores/authStore';
 import AppToast from '../ui/AppToast.vue';
 import { useCloned } from '@vueuse/core';
 import { useNavigationStore } from '@/stores/navigationStore';
+import FormLayout from '@/layouts/FormLayout.vue';
 
 const { defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -59,24 +60,25 @@ const onSubmit = handleSubmit(async ({ name, email, password }) =>
 </script>
 
 <template>
-  <form class="signup-form" @submit="onSubmit" novalidate>
-    <AppToast
-      :should-show="authStore.authStatus === AuthStatus.FailedToSignUp"
-      variant="error"
-      @close="authStore.authStatus = initialAuthStatus"
-    >
-      Ha habido un problema al intentar registrarte. Por favor, inténtalo de
-      nuevo más adelante.
-    </AppToast>
+  <!-- TODO: Move to global component with dedicated store -->
+  <AppToast
+    :should-show="authStore.authStatus === AuthStatus.FailedToSignUp"
+    variant="error"
+    @close="authStore.authStatus = initialAuthStatus"
+  >
+    Ha habido un problema al intentar registrarte. Por favor, inténtalo de nuevo
+    más adelante.
+  </AppToast>
 
-    <h1 class="title">Crea tu cuenta</h1>
+  <FormLayout class="signup-form" @submit="onSubmit" novalidate>
+    <template #title>Crea tu cuenta</template>
 
-    <h2 class="subtitle">
+    <template #subtitle>
       Empieza a compartir fotos y vídeos de tu bebé con familiares y amigos de
       forma segura.
-    </h2>
+    </template>
 
-    <div class="inputs">
+    <template #inputs>
       <AppInput
         placeholder="Introduce tu nombre"
         name="name"
@@ -114,9 +116,9 @@ const onSubmit = handleSubmit(async ({ name, email, password }) =>
           Mostrar contraseña
         </AppCheckbox>
       </div>
-    </div>
+    </template>
 
-    <div class="buttons">
+    <template #buttons>
       <AppButton
         variant="primary"
         size="medium"
@@ -124,60 +126,26 @@ const onSubmit = handleSubmit(async ({ name, email, password }) =>
       >
         Crear cuenta
       </AppButton>
-    </div>
 
-    <div class="switch-auth-mode">
-      <span>¿Ya tienes una cuenta?</span>
-      &nbsp;
-      <AppButton
-        variant="link"
-        :to="{ name: 'auth', params: { step: AuthStep.Login } }"
-      >
-        Inicia sesión
-      </AppButton>
-    </div>
-  </form>
+      <div class="switch-auth-mode">
+        <span>¿Ya tienes una cuenta?</span>
+        &nbsp;
+        <AppButton
+          variant="link"
+          :to="{ name: 'auth', params: { step: AuthStep.Login } }"
+        >
+          Inicia sesión
+        </AppButton>
+      </div>
+    </template>
+  </FormLayout>
 </template>
 
 <style scoped lang="scss">
-// TODO: extract common styles of signup login and passwordRecovery into layout component
 .signup-form {
-  text-align: center;
-  width: 100%;
-
-  .title {
-    font-family: var(--font-family-title);
-    font-size: var(--font-size-xl);
-    font-weight: 600;
-  }
-
-  .subtitle {
-    font-family: var(--font-family-title);
-    font-size: var(--font-size-md);
-  }
-
-  .inputs {
-    margin-top: var(--space-lg);
-    margin-bottom: var(--space-lg);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-
-    .show-password {
-      margin-top: var(--space-xs);
-      width: fit-content;
-    }
-  }
-
-  .buttons {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-  }
-
-  .switch-auth-mode {
-    margin-top: var(--space-lg);
+  .show-password {
+    margin-top: var(--space-xs);
+    width: fit-content;
   }
 }
 </style>
