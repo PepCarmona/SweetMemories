@@ -50,6 +50,8 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
 
 <style scoped lang="scss">
 .profile-intro-steps-header {
+  --bullet-size: 30px;
+
   display: flex;
 
   .step {
@@ -60,11 +62,13 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
 
     .bullet {
       position: relative;
-      height: 40px;
-      width: 40px;
+      height: var(--bullet-size);
+      width: var(--bullet-size);
       display: flex;
       align-items: center;
       justify-content: center;
+
+      font-size: var(--font-size-sm);
       font-weight: 600;
       color: var(--color-light);
 
@@ -73,7 +77,7 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
         height: 100%;
         width: 100%;
         z-index: var(--layer-background);
-        color: var(--color-primary);
+        color: var(--color-primary-light);
       }
     }
 
@@ -81,18 +85,40 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
       text-align: center;
       margin-top: var(--space-xxxs);
       font-size: var(--font-size-sm);
-      color: var(--color-primary);
+      color: var(--color-primary-light);
     }
 
-    &:not(.active) {
+    &.active {
       .bullet {
         .blob {
-          color: var(--color-mid);
+          color: var(--color-primary);
         }
       }
 
       .description {
-        color: var(--color-mid);
+        color: var(--color-primary);
+      }
+    }
+
+    &:not(:first-child) {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 1px;
+        width: calc(100% - var(--bullet-size) * 2);
+
+        top: calc(var(--bullet-size) / 2);
+        right: 50%;
+        transform: translate(calc(var(--bullet-size) * -1), -50%);
+        background-color: var(--color-primary-light);
+      }
+
+      &.active {
+        &::after {
+          background-color: var(--color-primary);
+        }
       }
     }
 
@@ -109,6 +135,16 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
         .blob {
           transform: scale(0.9);
         }
+      }
+    }
+  }
+
+  @include breakpoint(md) {
+    --bullet-size: 40px;
+
+    .step {
+      .bullet {
+        font-size: var(--font-size-md);
       }
     }
   }
