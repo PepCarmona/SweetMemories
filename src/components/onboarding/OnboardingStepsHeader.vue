@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ProfileIntroStep } from '@/types/profileIntro';
+import { OnboardingStep } from '@/types/onboarding';
 import BlobOne from '../ui/blobs/BlobOne.vue';
 import BlobThree from '../ui/blobs/BlobThree.vue';
 import BlobTwo from '../ui/blobs/BlobTwo.vue';
 
-interface ProfileIntroStepsHeaderProps {
-  step: ProfileIntroStep;
+interface OnboardingStepsHeaderProps {
+  step: OnboardingStep;
 }
-const props = defineProps<ProfileIntroStepsHeaderProps>();
+const props = defineProps<OnboardingStepsHeaderProps>();
 </script>
 
 <template>
-  <header class="profile-intro-steps-header">
+  <header class="onboarding-steps-header">
     <div class="step signup-step active">
       <div class="bullet">
         <BlobOne class="blob" />
@@ -36,7 +36,7 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
       :class="{
         step: true,
         'family-step': true,
-        active: props.step === ProfileIntroStep.AddFamily,
+        active: props.step === OnboardingStep.AddFamily,
       }"
     >
       <div class="bullet">
@@ -49,7 +49,7 @@ const props = defineProps<ProfileIntroStepsHeaderProps>();
 </template>
 
 <style scoped lang="scss">
-.profile-intro-steps-header {
+.onboarding-steps-header {
   --bullet-size: 30px;
 
   display: flex;
