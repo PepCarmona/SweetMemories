@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ProfileIntroStepsHeader from '@/components/profileIntro/ProfileIntroStepsHeader.vue';
 import type { ProfileIntroStep } from '@/types/profileIntro';
 
 definePage({
@@ -15,6 +16,8 @@ const props = defineProps<ProfileIntroPageProps>();
 </script>
 
 <template>
+  <ProfileIntroStepsHeader :step="props.step" />
+
   <main class="profile-intro-page">
     {{ props.step }}
   </main>
