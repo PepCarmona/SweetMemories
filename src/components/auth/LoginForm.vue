@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, AuthStep, type LoginUser } from '@/types/auth';
+import { AuthStatus, AuthStep, type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
@@ -14,7 +14,7 @@ import FormLayout from '@/layouts/FormLayout.vue';
 
 const { errors, defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
-    z.object<TypeToZod<LoginUser>>({
+    z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
       password: z
         .string({ required_error: 'Password is required' })

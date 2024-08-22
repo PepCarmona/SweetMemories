@@ -1,4 +1,4 @@
-import type { AppUser } from '@/types/auth';
+import type { AppUser } from '@/types/user';
 import {
   createClient,
   type AuthChangeEvent,
@@ -15,16 +15,12 @@ export class AuthService {
 
   public async signUpNewUser(
     email: string,
-    password: string,
-    name: string
+    password: string
   ): Promise<AppUser> {
     const { data, error } = await this.client.signUp({
       email,
       password,
       options: {
-        data: {
-          name,
-        },
         emailRedirectTo: location.origin,
       },
     });
@@ -101,16 +97,15 @@ export class AuthService {
   }
 
   private mapAppUser(user: User): AppUser {
-    const { email } = user;
-    const { name } = user.user_metadata;
+    const { email, id } = user;
 
-    if (email === undefined || typeof name !== 'string') {
+    if (email === undefined) {
       throw new Error('Invalid user.');
     }
 
     return {
+      id,
       email,
-      name,
     };
   }
 }

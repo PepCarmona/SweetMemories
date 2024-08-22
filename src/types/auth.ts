@@ -4,19 +4,10 @@ export enum AuthStep {
   PasswordRecovery = 'password-recovery',
 }
 
-export interface LoginUser {
+export interface AuthUser {
   email: string;
   password: string;
 }
-
-export type SignupUser = LoginUser & {
-  name: string;
-};
-
-export type AppUser = {
-  email: string;
-  name: string;
-};
 
 export enum AuthStatus {
   LoggedIn = 'logged-in',

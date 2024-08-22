@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, AuthStep, type SignupUser } from '@/types/auth';
+import { AuthStatus, AuthStep, type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
@@ -16,9 +16,8 @@ import FormLayout from '@/layouts/FormLayout.vue';
 
 const { defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
-    z.object<TypeToZod<SignupUser>>({
+    z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
-      name: z.string({ required_error: 'Name is required' }),
       password: z
         .string({ required_error: 'Password is required' })
         .min(6, 'Password must contain at least 6 characters')
@@ -35,9 +34,6 @@ const { defineField, handleSubmit, isSubmitting } = useForm({
 const [email, emailProps] = defineField('email', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
-const [name, nameProps] = defineField('name', {
-  props: (state): AppInputProps => ({ validationError: state.errors[0] }),
-});
 const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
@@ -49,10 +45,10 @@ const navigationStore = useNavigationStore();
 const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
-const onSubmit = handleSubmit(async ({ name, email, password }) =>
+const onSubmit = handleSubmit(async ({ email, password }) =>
   // TODO: handle specific error codes text in signup, login and passwordRecovery
   {
-    await authStore.signUp({ name, email, password });
+    await authStore.signUp({ email, password });
 
     await navigationStore.navigateToFeedPage();
   }
@@ -79,16 +75,6 @@ const onSubmit = handleSubmit(async ({ name, email, password }) =>
     </template>
 
     <template #inputs>
-      <AppInput
-        placeholder="Introduce tu nombre"
-        name="name"
-        type="text"
-        v-model="name"
-        v-bind="nameProps"
-      >
-        Nombre
-      </AppInput>
-
       <AppInput
         placeholder="Introduce tu correo electrónico"
         name="mail"
