@@ -20,7 +20,15 @@ const props = defineProps<OnboardingStepsHeaderProps>();
       <div class="description">Crea tu cuenta</div>
     </div>
 
-    <div class="step profile-step active">
+    <div
+      :class="{
+        step: true,
+        'profile-step': true,
+        active:
+          props.step === OnboardingStep.ProfileDetails ||
+          props.step === OnboardingStep.AddFamily,
+      }"
+    >
       <div class="bullet">
         <BlobTwo class="blob" />
         2

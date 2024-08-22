@@ -2,10 +2,12 @@
 import LoginForm from '@/components/auth/LoginForm.vue';
 import PasswordRecoveryForm from '@/components/auth/PasswordRecoveryForm.vue';
 import SignupForm from '@/components/auth/SignupForm.vue';
+import OnboardingStepsHeader from '@/components/onboarding/OnboardingStepsHeader.vue';
 import AppButton from '@/components/ui/AppButton.vue';
 import AppLogo from '@/components/ui/AppLogo.vue';
 import FormPageLayout from '@/layouts/FormPageLayout.vue';
 import { AuthStep } from '@/types/auth';
+import { OnboardingStep } from '@/types/onboarding';
 
 definePage({
   // TODO: Look into issue on unplugin-vue-router package for params coming from definePage
@@ -26,6 +28,11 @@ const props = defineProps<AuthPageProps>();
       <AppButton variant="transparent" to="/">
         <AppLogo />
       </AppButton>
+
+      <OnboardingStepsHeader
+        v-if="props.step === AuthStep.Signup"
+        :step="OnboardingStep.Signup"
+      />
     </template>
 
     <template #form>
