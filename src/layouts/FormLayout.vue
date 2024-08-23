@@ -39,13 +39,14 @@ const emit = defineEmits<FormLayoutEmits>();
 
   .title {
     font-family: var(--font-family-title);
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     font-weight: 600;
   }
 
   .subtitle {
     font-family: var(--font-family-title);
     font-size: var(--font-size-md);
+    margin-top: var(--space-xxxs);
   }
 
   .inputs {

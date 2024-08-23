@@ -32,6 +32,7 @@ const props = defineProps<AuthPageProps>();
       <OnboardingStepsHeader
         v-if="props.step === AuthStep.Signup"
         :step="OnboardingStep.Signup"
+        class="steps"
       />
     </template>
 
@@ -44,3 +45,11 @@ const props = defineProps<AuthPageProps>();
     </template>
   </FormPageLayout>
 </template>
+
+<style scoped lang="scss">
+.auth-page {
+  .steps {
+    margin: var(--space-xs) auto;
+  }
+}
+</style>
