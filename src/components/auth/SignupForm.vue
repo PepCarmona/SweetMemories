@@ -48,7 +48,7 @@ const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
 const onSubmit = handleSubmit(async ({ email, password }) =>
-  // TODO: handle specific error codes text in signup, login and passwordRecovery
+  // TODO: handle specific error codes text in signup, login and passwordRecovery (user_already_exists)
   {
     await authStore.signUp({ email, password });
 

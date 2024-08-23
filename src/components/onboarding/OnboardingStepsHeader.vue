@@ -1,53 +1,32 @@
 <script setup lang="ts">
+import { useOnboardingStore } from '@/stores/onboardingStore';
 import { OnboardingStep } from '@/types/onboarding';
-import BlobOne from '../ui/blobs/BlobOne.vue';
-import BlobThree from '../ui/blobs/BlobThree.vue';
-import BlobTwo from '../ui/blobs/BlobTwo.vue';
 
 interface OnboardingStepsHeaderProps {
   step: OnboardingStep;
 }
 const props = defineProps<OnboardingStepsHeaderProps>();
+
+const onboardingStore = useOnboardingStore();
 </script>
 
 <template>
   <header class="onboarding-steps-header">
-    <div class="step signup-step active">
-      <div class="bullet">
-        <BlobOne class="blob" />
-        1
-      </div>
-      <div class="description">Crea tu cuenta</div>
-    </div>
-
     <div
+      v-for="stepConfig in onboardingStore.stepConfigs"
+      :key="stepConfig.order"
       :class="{
         step: true,
-        'profile-step': true,
-        active:
-          props.step === OnboardingStep.ProfileDetails ||
-          props.step === OnboardingStep.AddFamily,
+        [stepConfig.name]: true,
+        active: onboardingStore.isActiveStep(stepConfig, props.step),
+        selected: props.step === stepConfig.name,
       }"
     >
       <div class="bullet">
-        <BlobTwo class="blob" />
-        2
+        <component :is="stepConfig.blobComponent" class="blob" />
+        {{ stepConfig.order }}
       </div>
-      <div class="description">Completa tu perfil</div>
-    </div>
-
-    <div
-      :class="{
-        step: true,
-        'family-step': true,
-        active: props.step === OnboardingStep.AddFamily,
-      }"
-    >
-      <div class="bullet">
-        <BlobThree class="blob" />
-        3
-      </div>
-      <div class="description">Añade una familia</div>
+      <div class="description">{{ stepConfig.description }}</div>
     </div>
   </header>
 </template>
@@ -107,6 +86,18 @@ const props = defineProps<OnboardingStepsHeaderProps>();
       }
     }
 
+    &.selected {
+      .bullet {
+        .blob {
+          color: var(--color-primary-dark);
+        }
+      }
+
+      .description {
+        color: var(--color-primary-dark);
+      }
+    }
+
     &:not(:first-child) {
       position: relative;
 
@@ -129,7 +120,7 @@ const props = defineProps<OnboardingStepsHeaderProps>();
       }
     }
 
-    &.profile-step {
+    &.profile {
       .bullet {
         .blob {
           transform: scale(0.9) rotate(80deg);
@@ -137,7 +128,7 @@ const props = defineProps<OnboardingStepsHeaderProps>();
       }
     }
 
-    &.family-step {
+    &.family {
       .bullet {
         .blob {
           transform: scale(0.9);

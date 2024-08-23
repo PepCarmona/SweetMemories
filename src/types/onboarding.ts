@@ -1,3 +1,4 @@
+import type { Component } from 'vue';
 import type { UserProfile } from './user';
 
 export enum OnboardingStep {
@@ -7,3 +8,10 @@ export enum OnboardingStep {
 }
 
 export type OnboardingUserProfileForm = Partial<UserProfile>;
+
+export interface OnboardingStepConfig {
+  order: number;
+  name: OnboardingStep;
+  description: string;
+  blobComponent: Component;
+}
