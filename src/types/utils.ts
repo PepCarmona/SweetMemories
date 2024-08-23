@@ -1,7 +1,8 @@
 import type { ZodOptional, ZodType, ZodObject } from 'zod';
 
+// https://github.com/colinhacks/zod/issues/53
 export type TypeToZod<T> = {
-  [K in keyof T]: T[K] extends
+  [K in keyof T]-?: T[K] extends
     | Date
     | string
     | number

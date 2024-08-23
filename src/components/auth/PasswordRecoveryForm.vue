@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, AuthStep } from '@/types/auth';
+import { AuthStatus } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
@@ -64,12 +64,7 @@ const onSubmit = handleSubmit(({ email }) =>
       >
         Enviar link de recuperación
       </AppButton>
-      <AppButton
-        variant="link"
-        :to="{ name: 'auth', params: { step: AuthStep.Login } }"
-      >
-        Go back
-      </AppButton>
+      <AppButton variant="link" to="/auth/login"> Go back </AppButton>
     </template>
   </FormLayout>
 </template>

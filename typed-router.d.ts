@@ -19,7 +19,9 @@ declare module 'vue-router/auto-routes' {
    */
   export interface RouteNamedMap {
     'landing': RouteRecordInfo<'landing', '/', Record<never, never>, Record<never, never>>,
-    'auth': RouteRecordInfo<'auth', '/auth/:step', Record<never, never>, Record<never, never>>,
+    'login': RouteRecordInfo<'login', '/auth/login', Record<never, never>, Record<never, never>>,
+    'recovery': RouteRecordInfo<'recovery', '/auth/recovery', Record<never, never>, Record<never, never>>,
+    'sugnup': RouteRecordInfo<'sugnup', '/auth/signup', Record<never, never>, Record<never, never>>,
     'feed': RouteRecordInfo<'feed', '/feed', Record<never, never>, Record<never, never>>,
     'onboarding': RouteRecordInfo<'onboarding', '/onboarding/:step', Record<never, never>, Record<never, never>>,
   }

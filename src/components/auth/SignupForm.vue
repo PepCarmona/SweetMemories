@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, AuthStep, type AuthUser } from '@/types/auth';
+import { AuthStatus, type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
@@ -122,12 +122,7 @@ const onSubmit = handleSubmit(async ({ email, password }) =>
       <div class="switch-auth-mode">
         <span>¿Ya tienes una cuenta?</span>
         &nbsp;
-        <AppButton
-          variant="link"
-          :to="{ name: 'auth', params: { step: AuthStep.Login } }"
-        >
-          Inicia sesión
-        </AppButton>
+        <AppButton variant="link" to="/auth/login"> Inicia sesión </AppButton>
       </div>
     </template>
   </FormLayout>

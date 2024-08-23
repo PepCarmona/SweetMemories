@@ -1,5 +1,4 @@
 import { useAuthStore } from '@/stores/authStore';
-import { AuthStep } from '@/types/auth';
 import type { Router } from 'vue-router';
 
 export function useAuthGuard(router: Router) {
@@ -9,11 +8,11 @@ export function useAuthGuard(router: Router) {
     await authStore.waitForSessionInitiated();
 
     if (!authStore.isLoggedIn && to.meta.requiresAuth) {
-      return { name: 'auth', params: { step: AuthStep.Login } };
+      return { name: 'login' };
     }
 
-    if (authStore.isLoggedIn && to.name === 'auth') {
-      return { name: 'feed' };
-    }
+    // if (authStore.isLoggedIn && to.name === 'auth') {
+    //   return { name: 'feed' };
+    // }
   });
 }

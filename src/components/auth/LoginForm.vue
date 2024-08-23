@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, AuthStep, type AuthUser } from '@/types/auth';
+import { AuthStatus, type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
@@ -89,10 +89,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
         <AppButton
           class="forgot-password"
           variant="link"
-          :to="{
-            name: 'auth',
-            params: { step: AuthStep.PasswordRecovery },
-          }"
+          to="/auth/recovery"
           size="small"
         >
           ¿Olvidaste la contraseña?
@@ -112,12 +109,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
       <div class="switch-auth-mode">
         <span>¿Aún no tienes una cuenta?</span>
         &nbsp;
-        <AppButton
-          variant="link"
-          :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
-        >
-          Regístrate
-        </AppButton>
+        <AppButton variant="link" to="/auth/signup"> Regístrate </AppButton>
       </div>
     </template>
   </FormLayout>

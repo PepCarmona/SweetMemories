@@ -1,4 +1,4 @@
-import type { AuthStep } from '@/types/auth';
+import { AuthStep } from '@/types/auth';
 import type { OnboardingStep } from '@/types/onboarding';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -11,7 +11,24 @@ export const useNavigationStore = defineStore('NavigationStore', () => {
   }
 
   async function navigateToAuthPage(step: AuthStep): Promise<void> {
-    await router.push({ name: 'auth', params: { step } });
+    switch (step) {
+      case AuthStep.Signup:
+        await router.push('/auth/signup');
+        break;
+
+      case AuthStep.Login:
+        await router.push('/auth/login');
+        break;
+
+      case AuthStep.PasswordRecovery:
+        await router.push('/auth/recovery');
+        break;
+
+      default: {
+        const exhaustiveCheck: never = step;
+        throw new Error(`Unhandled auth step: ${exhaustiveCheck}`);
+      }
+    }
   }
 
   async function navigateToFeedPage(): Promise<void> {

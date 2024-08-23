@@ -3,7 +3,6 @@ import { useWindowSize } from '@vueuse/core';
 import AppButton from '../ui/AppButton.vue';
 import { computed } from 'vue';
 import AppLogo from '../ui/AppLogo.vue';
-import { AuthStep } from '@/types/auth';
 
 const { width } = useWindowSize();
 
@@ -19,7 +18,7 @@ const isSmallWindow = computed<boolean>(() => width.value < 800);
     <AppButton
       variant="primary-outlined"
       :size="isSmallWindow ? 'small' : 'medium'"
-      :to="{ name: 'auth', params: { step: AuthStep.Signup } }"
+      to="/auth/signup"
     >
       Únete ahora
     </AppButton>
