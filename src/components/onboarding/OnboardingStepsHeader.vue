@@ -56,9 +56,10 @@ const onboardingStore = useOnboardingStore();
 
       font-size: var(--font-size-sm);
       font-weight: 600;
-      color: var(--color-light);
+      color: var(--color-primary-light);
 
       .blob {
+        display: none;
         position: absolute;
         height: 100%;
         width: 100%;
@@ -76,6 +77,8 @@ const onboardingStore = useOnboardingStore();
 
     &.active {
       .bullet {
+        color: var(--color-primary);
+
         .blob {
           color: var(--color-primary);
         }
@@ -88,20 +91,22 @@ const onboardingStore = useOnboardingStore();
 
     &.selected {
       .bullet {
+        color: var(--color-light);
+
         .blob {
-          color: var(--color-primary-dark);
+          display: block;
         }
       }
 
       .description {
-        color: var(--color-primary-dark);
+        color: var(--color-primary);
       }
     }
 
     &:not(:first-child) {
       position: relative;
 
-      &::after {
+      &::before {
         content: '';
         position: absolute;
         height: 1px;
@@ -114,7 +119,7 @@ const onboardingStore = useOnboardingStore();
       }
 
       &.active {
-        &::after {
+        &::before {
           background-color: var(--color-primary);
         }
       }
