@@ -1,5 +1,4 @@
 import { AuthStep } from '@/types/auth';
-import type { OnboardingStep } from '@/types/onboarding';
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
 
@@ -35,14 +34,9 @@ export const useNavigationStore = defineStore('NavigationStore', () => {
     await router.push('/feed');
   }
 
-  async function navigateToOnboardingPage(step: OnboardingStep): Promise<void> {
-    await router.push({ name: 'onboarding', params: { step } });
-  }
-
   return {
     navigateToLandingPage,
     navigateToAuthPage,
     navigateToFeedPage,
-    navigateToOnboardingPage,
   };
 });

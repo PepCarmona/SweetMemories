@@ -23,6 +23,5 @@ declare module 'vue-router/auto-routes' {
     'recovery': RouteRecordInfo<'recovery', '/auth/recovery', Record<never, never>, Record<never, never>>,
     'sugnup': RouteRecordInfo<'sugnup', '/auth/signup', Record<never, never>, Record<never, never>>,
     'feed': RouteRecordInfo<'feed', '/feed', Record<never, never>, Record<never, never>>,
-    'onboarding': RouteRecordInfo<'onboarding', '/onboarding/:step', Record<never, never>, Record<never, never>>,
   }
 }

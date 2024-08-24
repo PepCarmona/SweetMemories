@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import { useOnboardingStore } from '@/stores/onboardingStore';
-import { OnboardingStep } from '@/types/onboarding';
-
-interface OnboardingStepsHeaderProps {
-  step: OnboardingStep;
-}
-const props = defineProps<OnboardingStepsHeaderProps>();
 
 const onboardingStore = useOnboardingStore();
 </script>
@@ -18,8 +12,8 @@ const onboardingStore = useOnboardingStore();
       :class="{
         step: true,
         [stepConfig.name]: true,
-        active: onboardingStore.isActiveStep(stepConfig, props.step),
-        selected: props.step === stepConfig.name,
+        active: onboardingStore.isActiveStep(stepConfig),
+        selected: onboardingStore.isSelectedStep(stepConfig),
       }"
     >
       <div class="bullet">

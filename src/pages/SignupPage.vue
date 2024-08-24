@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import SignupForm from '@/components/auth/SignupForm.vue';
-import OnboardingStepsHeader from '@/components/onboarding/OnboardingStepsHeader.vue';
+import OnboardingStepsHeader from '@/components/auth/OnboardingStepsHeader.vue';
 import AppButton from '@/components/ui/AppButton.vue';
 import AppLogo from '@/components/ui/AppLogo.vue';
 import FormPageLayout from '@/layouts/FormPageLayout.vue';
 import { OnboardingStep } from '@/types/onboarding';
+import { useOnboardingStore } from '@/stores/onboardingStore';
 
 definePage({
   path: '/auth/signup',
   name: 'sugnup',
 });
+
+const onboardingStore = useOnboardingStore();
 </script>
 
 <template>
@@ -23,7 +26,9 @@ definePage({
     </template>
 
     <template #form>
-      <SignupForm />
+      <SignupForm
+        v-if="onboardingStore.currentStep === OnboardingStep.Signup"
+      />
     </template>
   </FormPageLayout>
 </template>

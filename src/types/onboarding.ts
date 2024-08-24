@@ -9,9 +9,10 @@ export enum OnboardingStep {
 
 export type OnboardingUserProfileForm = Partial<UserProfile>;
 
-export interface OnboardingStepConfig {
+export interface OnboardingStepNode {
   order: number;
   name: OnboardingStep;
   description: string;
   blobComponent: Component;
+  next: OnboardingStepNode | null;
 }
