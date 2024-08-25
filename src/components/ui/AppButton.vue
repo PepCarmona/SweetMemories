@@ -1,37 +1,57 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import type { RouteLocationRaw } from 'vue-router';
+import { computed, useSlots } from 'vue';
+import AppButtonBase from './AppButtonBase.vue';
 import AppSpinner from './AppSpinner.vue';
 
 interface AppButtonProps {
-  to?: RouteLocationRaw;
-  href?: string;
+  to?: InstanceType<typeof AppButtonBase>['to'];
+  href?: InstanceType<typeof AppButtonBase>['href'];
   variant?: 'primary' | 'primary-outlined' | 'transparent' | 'link';
   size?: 'small' | 'medium' | 'large';
-  state?: 'loading';
+  state?: 'loading' | 'default';
 }
 const props = defineProps<AppButtonProps>();
 
 const buttonClass = computed<string>(
   () => `app-button ${props.variant} ${props.size}  ${props.state}`
 );
+
+const slots = useSlots();
+
+const leftIconSlotName = 'leftIcon';
+const rightIconSlotName = 'rightIcon';
+
+const hasRightIconSlot = computed<boolean>(() => !!slots[rightIconSlotName]);
+
+const loadingSpinnerPosition = computed<'left' | 'right' | 'none'>(() => {
+  if (props.state !== 'loading') {
+    return 'none';
+  }
+
+  if (hasRightIconSlot.value) {
+    return 'right';
+  }
+
+  return 'left';
+});
 </script>
 
 <template>
-  <a v-if="props.href" :href="props.href" :class="buttonClass">
-    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
-    <slot />
-  </a>
+  <AppButtonBase :class="buttonClass" :to="props.to" :href="props.href">
+    <span class="content">
+      <span class="left-icon">
+        <AppSpinner v-if="loadingSpinnerPosition === 'left'" class="spinner" />
+        <slot v-else :name="leftIconSlotName" />
+      </span>
 
-  <RouterLink v-else-if="props.to" :to="props.to" :class="buttonClass">
-    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
-    <slot />
-  </RouterLink>
+      <slot />
 
-  <button v-else :class="buttonClass">
-    <AppSpinner v-if="props.state === 'loading'" class="spinner" />
-    <slot />
-  </button>
+      <span class="right-icon">
+        <AppSpinner v-if="loadingSpinnerPosition === 'right'" class="spinner" />
+        <slot v-else :name="rightIconSlotName" />
+      </span>
+    </span>
+  </AppButtonBase>
 </template>
 
 <style scoped lang="scss">
@@ -49,6 +69,25 @@ const buttonClass = computed<string>(
 
   &:focus-visible {
     outline: 3px solid var(--color-tertiary);
+  }
+
+  .content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .left-icon,
+    .right-icon {
+      height: 1em;
+      width: 1em;
+
+      .spinner {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 
   // Variants
@@ -131,11 +170,6 @@ const buttonClass = computed<string>(
     justify-content: center;
     gap: var(--space-sm);
     pointer-events: none;
-
-    .spinner {
-      height: 1em;
-      width: 1em;
-    }
   }
 }
 </style>

@@ -11,10 +11,9 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useAuthStore } from '@/stores/authStore';
 import AppToast from '../ui/AppToast.vue';
 import { useCloned } from '@vueuse/core';
-import { useNavigationStore } from '@/stores/navigationStore';
 import FormLayout from '@/layouts/FormLayout.vue';
 import ArrowIcon from '../ui/icons/ArrowIcon.vue';
-import { OnboardingStep } from '@/types/onboarding';
+import { useOnboardingStore } from '@/stores/onboardingStore';
 
 const { defineField, handleSubmit, isSubmitting } = useForm({
   validationSchema: toTypedSchema(
@@ -42,7 +41,7 @@ const [password, passwordProps] = defineField('password', {
 
 // TODO: move stores to page level
 const authStore = useAuthStore();
-const navigationStore = useNavigationStore();
+const onboardingStore = useOnboardingStore();
 
 const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
@@ -52,9 +51,7 @@ const onSubmit = handleSubmit(async ({ email, password }) =>
   {
     await authStore.signUp({ email, password });
 
-    await navigationStore.navigateToOnboardingPage(
-      OnboardingStep.ProfileDetails
-    );
+    onboardingStore.nextStep();
   }
 );
 </script>
@@ -112,11 +109,11 @@ const onSubmit = handleSubmit(async ({ email, password }) =>
         variant="primary"
         size="medium"
         :state="isSubmitting ? 'loading' : undefined"
-        class="signup-button"
       >
-        <span class="empty" />
         Continuar
-        <ArrowIcon class="icon" />
+        <template #rightIcon>
+          <ArrowIcon class="icon" />
+        </template>
       </AppButton>
 
       <div class="switch-auth-mode">
@@ -133,18 +130,6 @@ const onSubmit = handleSubmit(async ({ email, password }) =>
   .show-password {
     margin-top: var(--space-xs);
     width: fit-content;
-  }
-
-  .signup-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .empty,
-    .icon {
-      height: 1em;
-      width: 1em;
-    }
   }
 }
 </style>
