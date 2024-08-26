@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AuthStatus, type AuthUser } from '@/types/auth';
+import { type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
@@ -8,14 +8,20 @@ import { useForm } from 'vee-validate';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
 import { toTypedSchema } from '@vee-validate/zod';
-import { useAuthStore } from '@/stores/authStore';
-import AppToast from '../ui/AppToast.vue';
-import { useCloned } from '@vueuse/core';
 import FormLayout from '@/layouts/FormLayout.vue';
 import ArrowIcon from '../ui/icons/ArrowIcon.vue';
-import { useOnboardingStore } from '@/stores/onboardingStore';
 
-const { defineField, handleSubmit, isSubmitting } = useForm({
+interface SignupFormProps {
+  isSubmitting: boolean;
+}
+const props = defineProps<SignupFormProps>();
+
+interface SignupFormEmits {
+  (eventName: 'submit', eventValue: AuthUser): void;
+}
+const emit = defineEmits<SignupFormEmits>();
+
+const { defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
@@ -38,35 +44,12 @@ const [email, emailProps] = defineField('email', {
 const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
-
-// TODO: move stores to page level
-const authStore = useAuthStore();
-const onboardingStore = useOnboardingStore();
-
-const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 const shouldShowPassword = ref(false);
 
-const onSubmit = handleSubmit(async ({ email, password }) =>
-  // TODO: handle specific error codes text in signup, login and passwordRecovery (user_already_exists)
-  {
-    await authStore.signUp({ email, password });
-
-    onboardingStore.nextStep();
-  }
-);
+const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
 </script>
 
 <template>
-  <!-- TODO: Move to global component with dedicated store -->
-  <AppToast
-    :should-show="authStore.authStatus === AuthStatus.FailedToSignUp"
-    variant="error"
-    @close="authStore.authStatus = initialAuthStatus"
-  >
-    Ha habido un problema al intentar registrarte. Por favor, inténtalo de nuevo
-    más adelante.
-  </AppToast>
-
   <FormLayout class="signup-form" @submit="onSubmit" novalidate>
     <template #title>¡Empecemos por lo básico!</template>
 
@@ -108,7 +91,7 @@ const onSubmit = handleSubmit(async ({ email, password }) =>
       <AppButton
         variant="primary"
         size="medium"
-        :state="isSubmitting ? 'loading' : undefined"
+        :state="props.isSubmitting ? 'loading' : undefined"
       >
         Continuar
         <template #rightIcon>

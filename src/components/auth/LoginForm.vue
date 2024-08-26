@@ -1,18 +1,24 @@
 <script setup lang="ts">
-import { AuthStatus, type AuthUser } from '@/types/auth';
+import { type AuthUser } from '@/types/auth';
 import AppButton from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
-import AppToast from '../ui/AppToast.vue';
-import { useAuthStore } from '@/stores/authStore';
-import { useCloned } from '@vueuse/core';
-import { useNavigationStore } from '@/stores/navigationStore';
 import FormLayout from '@/layouts/FormLayout.vue';
 
-const { errors, defineField, handleSubmit, isSubmitting } = useForm({
+interface LoginFormProps {
+  isSubmitting: boolean;
+}
+const props = defineProps<LoginFormProps>();
+
+interface LoginFormEmits {
+  (eventName: 'submit', eventValue: AuthUser): void;
+}
+const emit = defineEmits<LoginFormEmits>();
+
+const { errors, defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Email is required' }).email(),
@@ -30,30 +36,10 @@ const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 
-const authStore = useAuthStore();
-const navigationStore = useNavigationStore();
-
-const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
-
-const onSubmit = handleSubmit(async ({ email, password }) => {
-  {
-    await authStore.logIn({ email, password });
-
-    await navigationStore.navigateToFeedPage();
-  }
-});
+const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
 </script>
 
 <template>
-  <AppToast
-    :should-show="authStore.authStatus === AuthStatus.FailedToLogIn"
-    variant="error"
-    @close="authStore.authStatus = initialAuthStatus"
-  >
-    Ha habido un problema al intentar iniciar sesión. Por favor, inténtalo de
-    nuevo más adelante.
-  </AppToast>
-
   <FormLayout class="login-form" @submit="onSubmit" novalidate>
     <template #title>Bienvenido de nuevo</template>
 
@@ -101,7 +87,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
       <AppButton
         variant="primary"
         size="medium"
-        :state="isSubmitting ? 'loading' : undefined"
+        :state="props.isSubmitting ? 'loading' : undefined"
       >
         Inicia sesión
       </AppButton>
