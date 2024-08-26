@@ -4,13 +4,17 @@ import OnboardingStepsHeader from '@/components/auth/OnboardingStepsHeader.vue';
 import AppButton from '@/components/ui/AppButton.vue';
 import AppLogo from '@/components/ui/AppLogo.vue';
 import FormPageLayout from '@/layouts/FormPageLayout.vue';
-import { OnboardingStep } from '@/types/onboarding';
+import {
+  OnboardingStep,
+  type OnboardingUserProfileForm,
+} from '@/types/onboarding';
 import { useOnboardingStore } from '@/stores/onboardingStore';
 import { useAuthStore } from '@/stores/authStore';
 import { AuthStatus, type AuthUser } from '@/types/auth';
 import { useCloned } from '@vueuse/core';
 import AppToast from '@/components/ui/AppToast.vue';
 import { ref } from 'vue';
+import CompleteProfileForm from '@/components/onboarding/CompleteProfileForm.vue';
 
 definePage({
   path: '/auth/signup',
@@ -23,6 +27,7 @@ const onboardingStore = useOnboardingStore();
 const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 
 const isSubmittingSignupForm = ref<boolean>(false);
+const isSubmittingProfileForm = ref<boolean>(false);
 
 async function handleSignupFormSubmit({
   email,
@@ -35,6 +40,19 @@ async function handleSignupFormSubmit({
   await authStore.signUp({ email, password });
 
   isSubmittingSignupForm.value = false;
+
+  onboardingStore.nextStep();
+}
+
+async function handleProfileFormSubmit({
+  name,
+  gender,
+}: OnboardingUserProfileForm): Promise<void> {
+  isSubmittingProfileForm.value = true;
+
+  isSubmittingProfileForm.value = false;
+
+  console.log({ name, gender });
 
   onboardingStore.nextStep();
 }
@@ -65,6 +83,13 @@ async function handleSignupFormSubmit({
         v-if="onboardingStore.currentStep === OnboardingStep.Signup"
         :is-submitting="isSubmittingSignupForm"
         @submit="handleSignupFormSubmit"
+      />
+      <CompleteProfileForm
+        v-else-if="
+          onboardingStore.currentStep === OnboardingStep.ProfileDetails
+        "
+        :is-submitting="isSubmittingProfileForm"
+        @submit="handleProfileFormSubmit"
       />
     </template>
   </FormPageLayout>
