@@ -54,6 +54,8 @@ const emit = defineEmits<AppToastEmits>();
   box-shadow: 0 0 32px var(--color-mid-light);
   padding: var(--space-sm);
 
+  z-index: var(--layer-forward);
+
   &.error {
     color: var(--color-error);
     background-color: var(--color-error-light);

@@ -21,7 +21,11 @@ const slots = useSlots();
 const leftIconSlotName = 'leftIcon';
 const rightIconSlotName = 'rightIcon';
 
+const hasLeftIconSlot = computed<boolean>(() => !!slots[leftIconSlotName]);
 const hasRightIconSlot = computed<boolean>(() => !!slots[rightIconSlotName]);
+const hasIconSlot = computed<boolean>(
+  () => hasLeftIconSlot.value || hasRightIconSlot.value
+);
 
 const loadingSpinnerPosition = computed<'left' | 'right' | 'none'>(() => {
   if (props.state !== 'loading') {
@@ -38,15 +42,15 @@ const loadingSpinnerPosition = computed<'left' | 'right' | 'none'>(() => {
 
 <template>
   <AppButtonBase :class="buttonClass" :to="props.to" :href="props.href">
-    <span class="content">
-      <span class="left-icon">
+    <span :class="{ content: true, 'with-icons': hasIconSlot }">
+      <span v-if="hasIconSlot" class="left-icon">
         <AppSpinner v-if="loadingSpinnerPosition === 'left'" class="spinner" />
         <slot v-else :name="leftIconSlotName" />
       </span>
 
       <slot />
 
-      <span class="right-icon">
+      <span v-if="hasIconSlot" class="right-icon">
         <AppSpinner v-if="loadingSpinnerPosition === 'right'" class="spinner" />
         <slot v-else :name="rightIconSlotName" />
       </span>
@@ -74,13 +78,22 @@ const loadingSpinnerPosition = computed<'left' | 'right' | 'none'>(() => {
   .content {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+
+    &.with-icons {
+      justify-content: space-between;
+    }
 
     .left-icon,
     .right-icon {
       height: 1em;
       width: 1em;
+
+      :deep(svg) {
+        height: 100%;
+        width: 100%;
+      }
 
       .spinner {
         display: block;
