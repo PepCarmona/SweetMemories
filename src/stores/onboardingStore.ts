@@ -3,7 +3,7 @@ import BlobThree from '@/components/ui/blobs/BlobThree.vue';
 import BlobTwo from '@/components/ui/blobs/BlobTwo.vue';
 import { OnboardingStep, type OnboardingStepNode } from '@/types/onboarding';
 import { defineStore } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed, markRaw, ref } from 'vue';
 
 export const useOnboardingStore = defineStore('OnboardingStore', () => {
   // State
@@ -11,21 +11,21 @@ export const useOnboardingStore = defineStore('OnboardingStore', () => {
     order: 3,
     name: OnboardingStep.AddFamily,
     description: 'Añade una familia',
-    blobComponent: BlobThree,
+    blobComponent: markRaw(BlobThree),
     next: null,
   };
   const profileStepNode: OnboardingStepNode = {
     order: 2,
     name: OnboardingStep.ProfileDetails,
     description: 'Completa tu perfil',
-    blobComponent: BlobTwo,
+    blobComponent: markRaw(BlobTwo),
     next: familyStepNode,
   };
   const signupStepNode: OnboardingStepNode = {
     order: 1,
     name: OnboardingStep.Signup,
     description: 'Crea tu cuenta',
-    blobComponent: BlobOne,
+    blobComponent: markRaw(BlobOne),
     next: profileStepNode,
   };
 
