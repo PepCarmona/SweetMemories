@@ -8,6 +8,8 @@ import AppInput from '../ui/AppInput.vue';
 import AppButton from '../ui/AppButton.vue';
 import type { OnboardingUserProfileForm } from '@/types/onboarding';
 import FormLayout from '@/layouts/FormLayout.vue';
+import AppSelect from '../ui/AppSelect.vue';
+import ArrowIcon from '../ui/icons/ArrowIcon.vue';
 
 interface CompleteProfileFormProps {
   isSubmitting: boolean;
@@ -64,6 +66,13 @@ const onSubmit = handleSubmit(async (userProfile) =>
       >
         Nombre
       </AppInput>
+
+      <AppSelect
+        :options="['a', 'b', 'c']"
+        :placeholder="'Selecciona tu género'"
+      >
+        Género
+      </AppSelect>
     </template>
 
     <template #buttons>
@@ -72,7 +81,10 @@ const onSubmit = handleSubmit(async (userProfile) =>
         size="medium"
         :state="props.isSubmitting ? 'loading' : undefined"
       >
-        Crear cuenta
+        Continuar
+        <template #rightIcon>
+          <ArrowIcon class="icon" />
+        </template>
       </AppButton>
     </template>
   </FormLayout>

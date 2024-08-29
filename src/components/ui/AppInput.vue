@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PickStringLiteral } from '@/types/utils';
-import { computed, type InputTypeHTMLAttribute } from 'vue';
+import { computed, useSlots, type InputTypeHTMLAttribute } from 'vue';
 import ErrorIcon from './icons/ErrorIcon.vue';
 
 type TextInputType = PickStringLiteral<
@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<AppInputProps>(), {
 });
 
 const model = defineModel();
-const slots = defineSlots();
+const slots = useSlots();
 
 const id = self.crypto.randomUUID();
 
@@ -41,7 +41,7 @@ const hasLabelSlot = computed<boolean>(() => !!slots['default']);
 </script>
 
 <template>
-  <div class="app-input-text">
+  <div class="app-input">
     <label v-if="hasLabelSlot" :for="id"><slot /></label>
     <input
       :id="id"
@@ -59,7 +59,7 @@ const hasLabelSlot = computed<boolean>(() => !!slots['default']);
 </template>
 
 <style scoped lang="scss">
-.app-input-text {
+.app-input {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -76,9 +76,11 @@ const hasLabelSlot = computed<boolean>(() => !!slots['default']);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--space-xs);
     border: 1px solid var(--color-mid-light);
+    font-family: var(--font-family-body);
     font-size: var(--font-size-md);
     width: 100%;
     color: var(--color-dark);
+    background-color: var(--color-lightest);
 
     &:focus {
       outline: 3px solid var(--color-tertiary);
