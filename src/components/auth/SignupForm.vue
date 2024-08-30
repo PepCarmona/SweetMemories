@@ -24,15 +24,18 @@ const emit = defineEmits<SignupFormEmits>();
 const { defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
-      email: z.string({ required_error: 'Email is required' }).email(),
+      email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
       password: z
-        .string({ required_error: 'Password is required' })
-        .min(6, 'Password must contain at least 6 characters')
-        .max(16, 'Password must contain less than 16 characters')
-        .regex(new RegExp(/[0-9]/), 'Password must contain at least one number')
+        .string({ required_error: 'Este campo es obligatorio' })
+        .min(6, 'La contrasña debe contener al menos 6 caracteres')
+        .max(16, 'La contraseña debe contener menos de 16 caracteres')
+        .regex(
+          new RegExp(/[0-9]/),
+          'La contraseña debe contener al menos un número'
+        )
         .regex(
           new RegExp(/[!@#$&*.]/),
-          'Password must contain at least one special character'
+          'La contraseña debe contener al menos un caracter especial'
         ),
     })
   ),

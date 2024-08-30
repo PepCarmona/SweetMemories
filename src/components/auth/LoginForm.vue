@@ -21,10 +21,8 @@ const emit = defineEmits<LoginFormEmits>();
 const { errors, defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
-      email: z.string({ required_error: 'Email is required' }).email(),
-      password: z
-        .string({ required_error: 'Password is required' })
-        .min(6, 'Password must contain at least 6 characters'),
+      email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
+      password: z.string({ required_error: 'Este campo es obligatorio' }),
     })
   ),
 });

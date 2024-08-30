@@ -19,7 +19,7 @@ const emit = defineEmits<PasswordRecoveryFormEmits>();
 const { errors, defineField, handleSubmit } = useForm({
   validationSchema: toTypedSchema(
     z.object({
-      email: z.string({ required_error: 'Email is required' }).email(),
+      email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
     })
   ),
 });

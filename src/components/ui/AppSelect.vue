@@ -4,10 +4,17 @@ import Select, {
   type SelectPassThroughMethodOptions,
 } from 'primevue/select';
 import { computed, useSlots } from 'vue';
+import ErrorIcon from './icons/ErrorIcon.vue';
+
+export interface AppSelectOption {
+  value: string;
+  label?: string;
+}
 
 interface AppSelectProps {
-  options: string[];
+  options: AppSelectOption[];
   placeholder?: string;
+  validationError?: string;
 }
 const props = defineProps<AppSelectProps>();
 
@@ -17,6 +24,39 @@ const slots = useSlots();
 const id = self.crypto.randomUUID();
 
 const hasLabelSlot = computed<boolean>(() => !!slots['default']);
+
+function getOptionValue(option: AppSelectOption): string {
+  return option.value;
+}
+
+function getOptionLabel(option: AppSelectOption): string {
+  return option.label ?? option.value;
+}
+
+function getRootClass(
+  options: SelectPassThroughMethodOptions<any>
+): SelectPassThroughAttributes {
+  return {
+    class: [
+      'app-select-root',
+      {
+        focused: options.state.focused,
+        invalid: !!props.validationError,
+      },
+    ],
+  };
+}
+
+function getLabelClass(): SelectPassThroughAttributes {
+  return {
+    class: [
+      'app-select-label',
+      {
+        selected: !!model.value,
+      },
+    ],
+  };
+}
 
 function getOptionClass(
   options: SelectPassThroughMethodOptions<any>
@@ -36,10 +76,12 @@ function getOptionClass(
     <Select
       v-model="model"
       :options="props.options"
+      :option-value="getOptionValue"
+      :option-label="getOptionLabel"
       :placeholder="props.placeholder"
       :pt="{
-        root: 'app-select-root',
-        label: 'app-select-label',
+        root: getRootClass,
+        label: getLabelClass,
         dropdown: 'app-select-dropdown',
         overlay: 'app-select-overlay',
         list: 'app-select-list',
@@ -47,6 +89,11 @@ function getOptionClass(
         optionLabel: 'app-select-option-label',
       }"
     />
+    <!-- TODO: Avoid layout shift and add transition -->
+    <div v-if="!!props.validationError" class="error">
+      <ErrorIcon class="icon" />
+      {{ props.validationError }}
+    </div>
   </div>
 </template>
 
@@ -62,6 +109,22 @@ function getOptionClass(
     font-weight: 600;
     margin-left: var(--space-xs);
     margin-bottom: var(--space-xs);
+  }
+
+  .error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xxxs);
+
+    font-size: var(--font-size-sm);
+    color: var(--color-error);
+
+    margin-top: var(--space-xxxs);
+
+    .icon {
+      height: var(--font-size-sm);
+      width: var(--font-size-sm);
+    }
   }
 }
 </style>
@@ -79,12 +142,25 @@ function getOptionClass(
   font-size: var(--font-size-md);
   color: var(--color-dark);
   background-color: var(--color-lightest);
+
+  &.focused {
+    outline: 3px solid var(--color-tertiary);
+  }
+
+  &.invalid {
+    border-color: var(--color-error);
+  }
 }
 
 .app-select-label {
   font-family: var(--font-family-body);
   font-size: var(--font-size-md);
   color: var(--color-mid);
+  outline: none;
+
+  &.selected {
+    color: var(--color-dark);
+  }
 }
 
 .app-select-dropdown {
@@ -125,7 +201,7 @@ function getOptionClass(
     color: var(--color-light);
 
     &.focused {
-      background-color: var(--color-tertiary);
+      background-color: var(--color-tertiary-semi-dark);
     }
   }
 }

@@ -4,10 +4,7 @@ import OnboardingStepsHeader from '@/components/auth/OnboardingStepsHeader.vue';
 import AppButton from '@/components/ui/AppButton.vue';
 import AppLogo from '@/components/ui/AppLogo.vue';
 import FormPageLayout from '@/layouts/FormPageLayout.vue';
-import {
-  OnboardingStep,
-  type OnboardingUserProfileForm,
-} from '@/types/onboarding';
+import { OnboardingStep } from '@/types/onboarding';
 import { useOnboardingStore } from '@/stores/onboardingStore';
 import { useAuthStore } from '@/stores/authStore';
 import { AuthStatus, type AuthUser } from '@/types/auth';
@@ -15,6 +12,7 @@ import { useCloned } from '@vueuse/core';
 import AppToast from '@/components/ui/AppToast.vue';
 import { ref } from 'vue';
 import CompleteProfileForm from '@/components/onboarding/CompleteProfileForm.vue';
+import type { UserProfile } from '@/types/user';
 
 definePage({
   path: '/auth/signup',
@@ -47,7 +45,7 @@ async function handleSignupFormSubmit({
 async function handleProfileFormSubmit({
   name,
   gender,
-}: OnboardingUserProfileForm): Promise<void> {
+}: UserProfile): Promise<void> {
   isSubmittingProfileForm.value = true;
 
   isSubmittingProfileForm.value = false;
