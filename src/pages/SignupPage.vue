@@ -35,7 +35,7 @@ async function handleSignupFormSubmit({
 
   isSubmittingSignupForm.value = true;
 
-  await authStore.signUp({ email, password });
+  // await authStore.signUp({ email, password });
 
   isSubmittingSignupForm.value = false;
 

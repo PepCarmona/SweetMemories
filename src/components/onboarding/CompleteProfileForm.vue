@@ -5,10 +5,11 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
-import AppButton from '../ui/AppButton.vue';
+import AppButton, { type AppButtonState } from '../ui/AppButton.vue';
 import FormLayout from '@/layouts/FormLayout.vue';
 import AppSelect, { type AppSelectOption } from '../ui/AppSelect.vue';
 import ArrowIcon from '../ui/icons/ArrowIcon.vue';
+import { computed } from 'vue';
 
 interface CompleteProfileFormProps {
   isSubmitting: boolean;
@@ -20,7 +21,7 @@ interface CompleteProfileFormEmits {
 }
 const emit = defineEmits<CompleteProfileFormEmits>();
 
-const { defineField, handleSubmit } = useForm({
+const { defineField, handleSubmit, meta } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<UserProfile>>({
       name: z.string({ required_error: 'Este campo es obligatorio' }).min(3),
@@ -66,6 +67,18 @@ const options: AppSelectOption[] = [
     label: 'Otro',
   },
 ];
+
+const buttonState = computed<AppButtonState>(() => {
+  if (!meta.value.valid) {
+    return 'disabled';
+  }
+
+  if (props.isSubmitting) {
+    return 'loading';
+  }
+
+  return 'default';
+});
 </script>
 
 <template>
@@ -96,11 +109,7 @@ const options: AppSelectOption[] = [
     </template>
 
     <template #buttons>
-      <AppButton
-        variant="primary"
-        size="medium"
-        :state="props.isSubmitting ? 'loading' : undefined"
-      >
+      <AppButton variant="primary" size="medium" :state="buttonState">
         Continuar
         <template #rightIcon>
           <ArrowIcon class="icon" />

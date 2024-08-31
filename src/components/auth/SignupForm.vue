@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { type AuthUser } from '@/types/auth';
-import AppButton from '../ui/AppButton.vue';
+import AppButton, { type AppButtonState } from '../ui/AppButton.vue';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import AppCheckbox from '../ui/AppCheckbox.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
@@ -21,7 +21,7 @@ interface SignupFormEmits {
 }
 const emit = defineEmits<SignupFormEmits>();
 
-const { defineField, handleSubmit } = useForm({
+const { defineField, handleSubmit, meta } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
@@ -47,9 +47,29 @@ const [email, emailProps] = defineField('email', {
 const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
+
+const onSubmit = handleSubmit(
+  (authUser) => emit('submit', authUser),
+  () =>
+    emit('submit', {
+      email: '',
+      password: '',
+    })
+);
+
 const shouldShowPassword = ref(false);
 
-const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
+const buttonState = computed<AppButtonState>(() => {
+  if (!meta.value.valid) {
+    return 'disabled';
+  }
+
+  if (props.isSubmitting) {
+    return 'loading';
+  }
+
+  return 'default';
+});
 </script>
 
 <template>
@@ -91,11 +111,7 @@ const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
     </template>
 
     <template #buttons>
-      <AppButton
-        variant="primary"
-        size="medium"
-        :state="props.isSubmitting ? 'loading' : undefined"
-      >
+      <AppButton variant="primary" size="medium" :state="buttonState">
         Continuar
         <template #rightIcon>
           <ArrowIcon class="icon" />

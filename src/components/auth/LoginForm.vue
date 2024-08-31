@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { type AuthUser } from '@/types/auth';
-import AppButton from '../ui/AppButton.vue';
+import AppButton, { type AppButtonState } from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 import type { TypeToZod } from '@/types/utils';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import FormLayout from '@/layouts/FormLayout.vue';
+import { computed } from 'vue';
 
 interface LoginFormProps {
   isSubmitting: boolean;
@@ -18,7 +19,7 @@ interface LoginFormEmits {
 }
 const emit = defineEmits<LoginFormEmits>();
 
-const { errors, defineField, handleSubmit } = useForm({
+const { errors, defineField, handleSubmit, meta } = useForm({
   validationSchema: toTypedSchema(
     z.object<TypeToZod<AuthUser>>({
       email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
@@ -35,6 +36,18 @@ const [password, passwordProps] = defineField('password', {
 });
 
 const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
+
+const buttonState = computed<AppButtonState>(() => {
+  if (!meta.value.valid) {
+    return 'disabled';
+  }
+
+  if (props.isSubmitting) {
+    return 'loading';
+  }
+
+  return 'default';
+});
 </script>
 
 <template>
@@ -82,11 +95,7 @@ const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
     </template>
 
     <template #buttons>
-      <AppButton
-        variant="primary"
-        size="medium"
-        :state="props.isSubmitting ? 'loading' : undefined"
-      >
+      <AppButton variant="primary" size="medium" :state="buttonState">
         Inicia sesión
       </AppButton>
 

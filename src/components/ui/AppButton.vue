@@ -3,12 +3,14 @@ import { computed, useSlots } from 'vue';
 import AppButtonBase from './AppButtonBase.vue';
 import AppSpinner from './AppSpinner.vue';
 
+export type AppButtonState = 'loading' | 'disabled' | 'default';
+
 interface AppButtonProps {
   to?: InstanceType<typeof AppButtonBase>['to'];
   href?: InstanceType<typeof AppButtonBase>['href'];
   variant?: 'primary' | 'primary-outlined' | 'transparent' | 'link';
   size?: 'small' | 'medium' | 'large';
-  state?: 'loading' | 'default';
+  state?: AppButtonState;
 }
 const props = defineProps<AppButtonProps>();
 
@@ -183,6 +185,11 @@ const loadingSpinnerPosition = computed<'left' | 'right' | 'none'>(() => {
     justify-content: center;
     gap: var(--space-sm);
     pointer-events: none;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    background-color: var(--color-mid-light);
   }
 }
 </style>

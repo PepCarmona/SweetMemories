@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import AppButton from '../ui/AppButton.vue';
+import AppButton, { type AppButtonState } from '../ui/AppButton.vue';
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 import AppInput, { type AppInputProps } from '../ui/AppInput.vue';
 import FormLayout from '@/layouts/FormLayout.vue';
+import { computed } from 'vue';
 
 interface PasswordRecoveryFormProps {
   isSubmitting: boolean;
@@ -16,7 +17,7 @@ interface PasswordRecoveryFormEmits {
 }
 const emit = defineEmits<PasswordRecoveryFormEmits>();
 
-const { errors, defineField, handleSubmit } = useForm({
+const { errors, defineField, handleSubmit, meta } = useForm({
   validationSchema: toTypedSchema(
     z.object({
       email: z.string({ required_error: 'Este campo es obligatorio' }).email(),
@@ -29,6 +30,18 @@ const [email, emailProps] = defineField('email', {
 });
 
 const onSubmit = handleSubmit(({ email }) => emit('submit', email));
+
+const buttonState = computed<AppButtonState>(() => {
+  if (!meta.value.valid) {
+    return 'disabled';
+  }
+
+  if (props.isSubmitting) {
+    return 'loading';
+  }
+
+  return 'default';
+});
 </script>
 
 <template>
@@ -49,11 +62,7 @@ const onSubmit = handleSubmit(({ email }) => emit('submit', email));
     </template>
 
     <template #buttons>
-      <AppButton
-        variant="primary"
-        size="medium"
-        :state="props.isSubmitting ? 'loading' : undefined"
-      >
+      <AppButton variant="primary" size="medium" :state="buttonState">
         Enviar link de recuperación
       </AppButton>
       <AppButton variant="link" to="/auth/login"> Go back </AppButton>
