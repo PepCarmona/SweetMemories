@@ -48,14 +48,7 @@ const [password, passwordProps] = defineField('password', {
   props: (state): AppInputProps => ({ validationError: state.errors[0] }),
 });
 
-const onSubmit = handleSubmit(
-  (authUser) => emit('submit', authUser),
-  () =>
-    emit('submit', {
-      email: '',
-      password: '',
-    })
-);
+const onSubmit = handleSubmit((authUser) => emit('submit', authUser));
 
 const shouldShowPassword = ref(false);
 

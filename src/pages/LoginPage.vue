@@ -13,6 +13,9 @@ import { ref } from 'vue';
 definePage({
   path: '/auth/login',
   name: 'login',
+  meta: {
+    redirectLoggedUsersToFeed: true,
+  },
 });
 
 const authStore = useAuthStore();

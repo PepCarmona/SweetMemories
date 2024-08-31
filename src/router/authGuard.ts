@@ -11,8 +11,8 @@ export function useAuthGuard(router: Router) {
       return { name: 'login' };
     }
 
-    // if (authStore.isLoggedIn && to.name === 'auth') {
-    //   return { name: 'feed' };
-    // }
+    if (authStore.isLoggedIn && to.meta.redirectLoggedUsersToFeed) {
+      return { name: 'feed' };
+    }
   });
 }

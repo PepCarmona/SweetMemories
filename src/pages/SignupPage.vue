@@ -17,6 +17,9 @@ import type { UserProfile } from '@/types/user';
 definePage({
   path: '/auth/signup',
   name: 'sugnup',
+  meta: {
+    redirectLoggedUsersToFeed: true,
+  },
 });
 
 const authStore = useAuthStore();
@@ -35,7 +38,7 @@ async function handleSignupFormSubmit({
 
   isSubmittingSignupForm.value = true;
 
-  // await authStore.signUp({ email, password });
+  await authStore.signUp({ email, password });
 
   isSubmittingSignupForm.value = false;
 
@@ -48,9 +51,9 @@ async function handleProfileFormSubmit({
 }: UserProfile): Promise<void> {
   isSubmittingProfileForm.value = true;
 
-  isSubmittingProfileForm.value = false;
-
   console.log({ name, gender });
+
+  isSubmittingProfileForm.value = false;
 
   onboardingStore.nextStep();
 }

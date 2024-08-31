@@ -12,6 +12,9 @@ import { ref } from 'vue';
 definePage({
   path: '/auth/recovery',
   name: 'recovery',
+  meta: {
+    redirectLoggedUsersToFeed: true,
+  },
 });
 
 const authStore = useAuthStore();
