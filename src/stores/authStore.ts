@@ -1,4 +1,4 @@
-import { AuthService } from '@/services/AuthService';
+import { useAuthService } from '@/services/authService';
 import { AuthStatus, type AuthUser } from '@/types/auth';
 import type { AppUser } from '@/types/user';
 import { watchOnce } from '@vueuse/core';
@@ -7,7 +7,7 @@ import { computed, ref } from 'vue';
 
 export const useAuthStore = defineStore('AuthStore', () => {
   // State
-  const service = new AuthService();
+  const authService = useAuthService();
   const currentUser = ref<AppUser | null>(null);
   const authStatus = ref<AuthStatus>(AuthStatus.LoggedOut);
   const hasInitiatedSession = ref<boolean>(false);
@@ -20,7 +20,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
     let signedUpUser: AppUser;
 
     try {
-      signedUpUser = await service.signUpNewUser(email, password);
+      signedUpUser = await authService.signUpNewUser(email, password);
 
       currentUser.value = signedUpUser;
       authStatus.value = AuthStatus.LoggedIn;
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
     let signedUpUser: AppUser;
 
     try {
-      signedUpUser = await service.signInWithEmail(email, password);
+      signedUpUser = await authService.signInWithEmail(email, password);
 
       currentUser.value = signedUpUser;
       authStatus.value = AuthStatus.LoggedIn;
@@ -52,7 +52,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
 
   async function logOut(): Promise<void> {
     try {
-      await service.signOut();
+      await authService.signOut();
 
       currentUser.value = null;
       authStatus.value = AuthStatus.LoggedOut;
@@ -63,7 +63,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
 
   async function sendPasswordRecovery(email: string): Promise<void> {
     try {
-      await service.resetPassword(email);
+      await authService.resetPassword(email);
 
       authStatus.value = AuthStatus.LoggedOut;
     } catch (error) {
@@ -83,7 +83,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
     });
   }
 
-  service.listenToAuthEvents((event, user) => {
+  authService.listenToAuthEvents((event, user) => {
     currentUser.value = user;
 
     if (event === 'INITIAL_SESSION') {

@@ -1,25 +1,30 @@
 import axios from 'axios';
 
-export class ApiService {
-  private httpService = axios.create({
+export function useExternalApi() {
+  const httpService = axios.create({
     baseURL: '/api',
   });
 
-  public get<T>(endpoint: string): Promise<T> {
+  function get<T>(endpoint: string): Promise<T> {
     return new Promise((resolve, reject) => {
-      axios
+      httpService
         .get(`/${endpoint}`)
         .then((response) => resolve(response.data))
         .catch((error) => reject(error));
     });
   }
 
-  public post<T, R>(endpoint: string, body?: T): Promise<R> {
+  function post<T, R>(endpoint: string, body?: T): Promise<R> {
     return new Promise((resolve, reject) => {
-      axios
+      httpService
         .post(`/${endpoint}`, body)
         .then((response) => resolve(response.data))
         .catch((error) => reject(error));
     });
   }
+
+  return {
+    get,
+    post,
+  };
 }

@@ -7,17 +7,17 @@ import {
 } from '@supabase/supabase-js';
 import type { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
 
-export class AuthService {
-  private client: SupabaseAuthClient = createClient(
+export function useAuthService() {
+  const client: SupabaseAuthClient = createClient(
     import.meta.env.VITE_SUPABASE_URL,
     import.meta.env.VITE_SUPABASE_KEY
   ).auth;
 
-  public async signUpNewUser(
+  async function signUpNewUser(
     email: string,
     password: string
   ): Promise<AppUser> {
-    const { data, error } = await this.client.signUp({
+    const { data, error } = await client.signUp({
       email,
       password,
       options: {
@@ -33,14 +33,14 @@ export class AuthService {
       throw new Error('Registered user not available');
     }
 
-    return this.mapAppUser(data.user);
+    return mapAppUser(data.user);
   }
 
-  public async signInWithEmail(
+  async function signInWithEmail(
     email: string,
     password: string
   ): Promise<AppUser> {
-    const { data, error } = await this.client.signInWithPassword({
+    const { data, error } = await client.signInWithPassword({
       email,
       password,
     });
@@ -49,11 +49,11 @@ export class AuthService {
       return Promise.reject(error);
     }
 
-    return this.mapAppUser(data.user);
+    return mapAppUser(data.user);
   }
 
-  public async resetPassword(email: string): Promise<void> {
-    const { error } = await this.client.resetPasswordForEmail(email, {
+  async function resetPassword(email: string): Promise<void> {
+    const { error } = await client.resetPasswordForEmail(email, {
       redirectTo: `${location.origin}/account/update-password`,
     });
 
@@ -62,8 +62,8 @@ export class AuthService {
     }
   }
 
-  public async updatePassword(newPassword: string): Promise<AppUser> {
-    const { data, error } = await this.client.updateUser({
+  async function updatePassword(newPassword: string): Promise<AppUser> {
+    const { data, error } = await client.updateUser({
       password: newPassword,
     });
 
@@ -71,32 +71,32 @@ export class AuthService {
       return Promise.reject(error);
     }
 
-    return this.mapAppUser(data.user);
+    return mapAppUser(data.user);
   }
 
-  public async signOut(): Promise<void> {
-    const { error } = await this.client.signOut();
+  async function signOut(): Promise<void> {
+    const { error } = await client.signOut();
 
     if (error !== null) {
       Promise.reject(error);
     }
   }
 
-  public listenToAuthEvents(
+  function listenToAuthEvents(
     callback: (
       event: AuthChangeEvent,
       user: AppUser | null
     ) => void | Promise<void>
   ): Subscription {
-    return this.client.onAuthStateChange((event, session) => {
+    return client.onAuthStateChange((event, session) => {
       const user = session?.user || null;
-      const appUser = user ? this.mapAppUser(user) : null;
+      const appUser = user ? mapAppUser(user) : null;
 
       callback(event, appUser);
     }).data.subscription;
   }
 
-  private mapAppUser(user: User): AppUser {
+  function mapAppUser(user: User): AppUser {
     const { email, id } = user;
 
     if (email === undefined) {
@@ -108,4 +108,13 @@ export class AuthService {
       email,
     };
   }
+
+  return {
+    signUpNewUser,
+    signInWithEmail,
+    resetPassword,
+    updatePassword,
+    signOut,
+    listenToAuthEvents,
+  };
 }
