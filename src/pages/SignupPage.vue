@@ -7,9 +7,7 @@ import FormPageLayout from '@/layouts/FormPageLayout.vue';
 import { OnboardingStep } from '@/types/onboarding';
 import { useOnboardingStore } from '@/stores/onboardingStore';
 import { useAuthStore } from '@/stores/authStore';
-import { AuthStatus, type AuthUser } from '@/types/auth';
-import { useCloned } from '@vueuse/core';
-import AppToast from '@/components/ui/AppToast.vue';
+import { type AuthUser } from '@/types/auth';
 import { ref } from 'vue';
 import CompleteProfileForm from '@/components/onboarding/CompleteProfileForm.vue';
 import type { UserProfile } from '@/types/user';
@@ -24,8 +22,6 @@ definePage({
 
 const authStore = useAuthStore();
 const onboardingStore = useOnboardingStore();
-
-const { cloned: initialAuthStatus } = useCloned(authStore.authStatus);
 
 const isSubmittingSignupForm = ref<boolean>(false);
 const isSubmittingProfileForm = ref<boolean>(false);
@@ -60,16 +56,6 @@ async function handleProfileFormSubmit({
 </script>
 
 <template>
-  <!-- TODO: Move to global component with dedicated store -->
-  <AppToast
-    :should-show="authStore.authStatus === AuthStatus.FailedToSignUp"
-    variant="error"
-    @close="authStore.authStatus = initialAuthStatus"
-  >
-    Ha habido un problema al intentar registrarte. Por favor, inténtalo de nuevo
-    más adelante.
-  </AppToast>
-
   <FormPageLayout class="signup-page">
     <template #header>
       <AppButton variant="transparent" to="/">

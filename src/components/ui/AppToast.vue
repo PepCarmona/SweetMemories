@@ -1,20 +1,10 @@
 <script setup lang="ts">
-// TODO: move into root component and create toastSore
+import { useToastStore } from '@/stores/toastStore';
 import AppButton from './AppButton.vue';
 import AppTransitionSlide from './AppTransitionSlide.vue';
 import CloseIcon from './icons/CloseIcon.vue';
 
-interface AppToastProps {
-  shouldShow?: boolean;
-  variant: 'error';
-  timeToAutoclose?: number;
-}
-const props = defineProps<AppToastProps>();
-
-interface AppToastEmits {
-  (eventName: 'close'): void;
-}
-const emit = defineEmits<AppToastEmits>();
+const toastStore = useToastStore();
 </script>
 
 <template>
@@ -22,13 +12,12 @@ const emit = defineEmits<AppToastEmits>();
     <div
       :class="{
         'app-toast': true,
-        [props.variant]: true,
-        autoclose: props.timeToAutoclose,
+        [toastStore.toast.variant]: true,
       }"
-      v-if="props.shouldShow"
+      v-if="toastStore.toast"
     >
-      <slot />
-      <AppButton class="close-button" @click.prevent="emit('close')">
+      {{ toastStore.toast.content }}
+      <AppButton class="close-button" @click.prevent="toastStore.closeToast()">
         <CloseIcon class="close-icon" />
       </AppButton>
     </div>

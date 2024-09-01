@@ -1,15 +1,17 @@
 import { useAuthService } from '@/services/authService';
-import { AuthStatus, type AuthUser } from '@/types/auth';
+import { type AuthUser } from '@/types/auth';
 import type { AppUser } from '@/types/user';
 import { watchOnce } from '@vueuse/core';
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
+import { useToastStore } from './toastStore';
+import { ToastVariant } from '@/types/toast';
 
 export const useAuthStore = defineStore('AuthStore', () => {
-  // State
   const authService = useAuthService();
+  const toastStore = useToastStore();
+  // State
   const currentUser = ref<AppUser | null>(null);
-  const authStatus = ref<AuthStatus>(AuthStatus.LoggedOut);
   const hasInitiatedSession = ref<boolean>(false);
 
   // Getters
@@ -23,11 +25,14 @@ export const useAuthStore = defineStore('AuthStore', () => {
       signedUpUser = await authService.signUpNewUser(email, password);
 
       currentUser.value = signedUpUser;
-      authStatus.value = AuthStatus.LoggedIn;
 
       return signedUpUser;
     } catch (error) {
-      authStatus.value = AuthStatus.FailedToSignUp;
+      toastStore.openToast({
+        content:
+          'Ha habido un problema al intentar registrarte. Por favor, inténtalo de nuevo más adelante.',
+        variant: ToastVariant.Error,
+      });
 
       return Promise.reject(error);
     }
@@ -40,11 +45,14 @@ export const useAuthStore = defineStore('AuthStore', () => {
       signedUpUser = await authService.signInWithEmail(email, password);
 
       currentUser.value = signedUpUser;
-      authStatus.value = AuthStatus.LoggedIn;
 
       return signedUpUser;
     } catch (error) {
-      authStatus.value = AuthStatus.FailedToLogIn;
+      toastStore.openToast({
+        content:
+          'Ha habido un problema al intentar iniciar sesión. Por favor, inténtalo de nuevo más adelante.',
+        variant: ToastVariant.Error,
+      });
 
       return Promise.reject(error);
     }
@@ -55,7 +63,6 @@ export const useAuthStore = defineStore('AuthStore', () => {
       await authService.signOut();
 
       currentUser.value = null;
-      authStatus.value = AuthStatus.LoggedOut;
     } catch (error) {
       Promise.reject(error);
     }
@@ -64,10 +71,12 @@ export const useAuthStore = defineStore('AuthStore', () => {
   async function sendPasswordRecovery(email: string): Promise<void> {
     try {
       await authService.resetPassword(email);
-
-      authStatus.value = AuthStatus.LoggedOut;
     } catch (error) {
-      authStatus.value = AuthStatus.FailedToRecoverPassword;
+      toastStore.openToast({
+        content:
+          'Ha habido un problema al intentar enviar el email de recuperación de contraseña. Por favor, inténtalo de nuevo más adelante.',
+        variant: ToastVariant.Error,
+      });
 
       return Promise.reject(error);
     }
@@ -93,7 +102,6 @@ export const useAuthStore = defineStore('AuthStore', () => {
 
   return {
     // State
-    authStatus,
     currentUser,
 
     // Getters
