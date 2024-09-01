@@ -1,17 +1,14 @@
 import type { AppUser } from '@/types/user';
 import {
-  createClient,
   type AuthChangeEvent,
   type Subscription,
   type User,
 } from '@supabase/supabase-js';
 import type { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
+import { useSupabaseClient } from './supabase';
 
 export function useAuthService() {
-  const client: SupabaseAuthClient = createClient(
-    import.meta.env.VITE_SUPABASE_URL,
-    import.meta.env.VITE_SUPABASE_KEY
-  ).auth;
+  const client: SupabaseAuthClient = useSupabaseClient().auth;
 
   async function signUpNewUser(
     email: string,
