@@ -10,15 +10,19 @@ import { ToastVariant } from '@/types/toast';
 export const useAuthStore = defineStore('AuthStore', () => {
   const authService = useAuthService();
   const toastStore = useToastStore();
+
   // State
   const currentUser = ref<AppUser | null>(null);
   const hasInitiatedSession = ref<boolean>(false);
+  const isLoading = ref<boolean>(false);
 
   // Getters
   const isLoggedIn = computed(() => !!currentUser.value);
 
   // Actions
   async function signUp({ email, password }: AuthUser): Promise<AppUser> {
+    isLoading.value = true;
+
     let signedUpUser: AppUser;
 
     try {
@@ -35,10 +39,14 @@ export const useAuthStore = defineStore('AuthStore', () => {
       });
 
       return Promise.reject(error);
+    } finally {
+      isLoading.value = false;
     }
   }
 
   async function logIn({ email, password }: AuthUser): Promise<AppUser> {
+    isLoading.value = true;
+
     let signedUpUser: AppUser;
 
     try {
@@ -55,20 +63,28 @@ export const useAuthStore = defineStore('AuthStore', () => {
       });
 
       return Promise.reject(error);
+    } finally {
+      isLoading.value = false;
     }
   }
 
   async function logOut(): Promise<void> {
+    isLoading.value = true;
+
     try {
       await authService.signOut();
 
       currentUser.value = null;
     } catch (error) {
       Promise.reject(error);
+    } finally {
+      isLoading.value = false;
     }
   }
 
   async function sendPasswordRecovery(email: string): Promise<void> {
+    isLoading.value = true;
+
     try {
       await authService.resetPassword(email);
     } catch (error) {
@@ -79,6 +95,8 @@ export const useAuthStore = defineStore('AuthStore', () => {
       });
 
       return Promise.reject(error);
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -103,6 +121,7 @@ export const useAuthStore = defineStore('AuthStore', () => {
   return {
     // State
     currentUser,
+    isLoading,
 
     // Getters
     isLoggedIn,

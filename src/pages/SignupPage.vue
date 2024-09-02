@@ -8,9 +8,9 @@ import { OnboardingStep } from '@/types/onboarding';
 import { useOnboardingStore } from '@/stores/onboardingStore';
 import { useAuthStore } from '@/stores/authStore';
 import { type AuthUser } from '@/types/auth';
-import { ref } from 'vue';
 import CompleteProfileForm from '@/components/onboarding/CompleteProfileForm.vue';
 import type { UserProfile } from '@/types/user';
+import { useProfileStore } from '@/stores/profileStore';
 
 definePage({
   path: '/auth/signup',
@@ -21,35 +21,20 @@ definePage({
 });
 
 const authStore = useAuthStore();
+const profileStore = useProfileStore();
 const onboardingStore = useOnboardingStore();
 
-const isSubmittingSignupForm = ref<boolean>(false);
-const isSubmittingProfileForm = ref<boolean>(false);
-
-async function handleSignupFormSubmit({
-  email,
-  password,
-}: AuthUser): Promise<void> {
+async function handleSignupFormSubmit(authUser: AuthUser): Promise<void> {
   // TODO: handle specific error codes text in signup, login and passwordRecovery (user_already_exists)
-
-  isSubmittingSignupForm.value = true;
-
-  await authStore.signUp({ email, password });
-
-  isSubmittingSignupForm.value = false;
+  await authStore.signUp(authUser);
 
   onboardingStore.nextStep();
 }
 
-async function handleProfileFormSubmit({
-  name,
-  gender,
-}: UserProfile): Promise<void> {
-  isSubmittingProfileForm.value = true;
-
-  console.log({ name, gender });
-
-  isSubmittingProfileForm.value = false;
+async function handleProfileFormSubmit(
+  userProfile: UserProfile
+): Promise<void> {
+  await profileStore.createProfile(userProfile);
 
   onboardingStore.nextStep();
 }
@@ -68,14 +53,14 @@ async function handleProfileFormSubmit({
     <template #form>
       <SignupForm
         v-if="onboardingStore.currentStep === OnboardingStep.Signup"
-        :is-submitting="isSubmittingSignupForm"
+        :is-submitting="authStore.isLoading"
         @submit="handleSignupFormSubmit"
       />
       <CompleteProfileForm
         v-else-if="
           onboardingStore.currentStep === OnboardingStep.ProfileDetails
         "
-        :is-submitting="isSubmittingProfileForm"
+        :is-submitting="profileStore.isLoading"
         @submit="handleProfileFormSubmit"
       />
     </template>
